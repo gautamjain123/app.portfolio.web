@@ -1,0 +1,46 @@
+/* Glass / blur background */
+.navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.container {
+  background: rgba(10, 10, 18, 0.5);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  border-radius: 210px;
+}
+
+/* Gradient Brand Text */
+.brand-gradient {
+  font-weight: 700;
+  font-size: 24px;
+  background: linear-gradient(90deg, #7dd3fc, #6366f1, #9d4edd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Modern nav hover */
+.nav-link {
+  color: rgba(200, 200, 255, 0.65) !important;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: .8px;
+  transition: 0.3s;
+}
+
+.nav-glow:hover {
+  color: #c9bfff !important;
+  text-shadow: 0 0 6px #a694ff;
+}
+
+/* Mobile Toggler custom icon */
+.custom-toggler {
+  border: none;
+}
+
+.custom-toggler .navbar-toggler-icon {
+  filter: brightness(2);
+}

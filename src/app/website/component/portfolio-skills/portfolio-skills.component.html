@@ -1,0 +1,45 @@
+<section class="heatmap-section py-5" #root>
+  <div class="container">
+
+    <h3 class="about-heading mb-2">Skill <span class="shine">Heatmap</span> </h3>
+    <p class="subtitle mb-4">Proficiency visualized like GitHub contributions</p>
+
+    <div class="skill-grid">
+            <div class="heatmap-wrapper" *ngFor="let group of skillSections">
+      
+      <h5 class="group-title">{{ group.title }}</h5>
+
+      <div class="skill-row" *ngFor="let skill of group.skills">
+        <span class="skill-name">
+          {{ skill.name }}
+          <small class="counter">{{ skill.display }}%</small>
+        </span>
+
+        <div class="box-grid">
+          <span
+            *ngFor="let lvl of [].constructor(maxLevel); let i = index"
+            class="box"
+            [ngClass]="{
+              'lvl-1': i < skill.level,
+              'lvl-2': i < skill.level - 1,
+              'lvl-3': i < skill.level - 2,
+              'lvl-4': i < skill.level - 3
+            }"
+            [attr.data-title]="skill.name + ' Level: ' + skill.level"
+          ></span>
+        </div>
+      </div>
+
+    </div>
+    </div>
+
+    <div class="legend">
+      <span>Less</span>
+      <span class="legend-box lvl-1"></span>
+      <span class="legend-box lvl-2"></span>
+      <span class="legend-box lvl-3"></span>
+      <span class="legend-box lvl-4"></span>
+      <span>Expert</span>
+    </div>
+  </div>
+</section>
