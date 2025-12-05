@@ -1,1 +1,35 @@
-<p>portfolio-projects works!</p>
+<section class="case-section">
+
+  <div class="container">
+
+    <div class="case-label">PROJECTS THAT MATTER</div>
+    <h2 class="case-heading">Case Studies</h2>
+
+    <div class="case-list">
+
+      <div 
+        class="case-item"
+        *ngFor="let project of projects; index as i"
+        [ngClass]="{ 'reverse': i % 2 === 1 }"
+      >
+
+        <!-- Text Side -->
+        <div class="case-text">
+          <h3>{{ project.title }}</h3>
+          <p>{{ project.desc }}</p>
+
+          <div class="case-tech">
+            <span *ngFor="let t of project.tech">{{ t }}</span>
+          </div>
+        </div>
+
+        <!-- Showcase Side -->
+        <div class="case-showcase"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
