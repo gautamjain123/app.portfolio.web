@@ -6,7 +6,6 @@
 
     <div class="cta-buttons">
       <a class="btn-primary" style="text-decoration: none;" [routerLink]="'contact-me'">Contact me</a>
-      <!-- <a href="#demo" class="btn-outline" style="text-decoration: none;">Book a free call</a> -->
     </div>
   </div>
 
@@ -17,50 +16,75 @@
 
   <!-- MAIN FOOTER AREA -->
   <div class="mid-section">
-      <div class="footer-main container">
+    <div class="footer-main container">
 
-    <div class="footer-brand">
-      <div class="logo">GJ</div>
-      <p>Delhi, India</p>
-      <p>+91-8010271565</p>
+      <!-- Branding -->
+      <div class="footer-brand">
+        <div class="logo">GJ</div>
+        <p>Delhi, India</p>
+        <p>+91-8010271565</p>
+
+        <!-- ✨ NEW mini bio -->
+        <p class="mini-bio">
+          Frontend Developer crafting smooth interfaces & immersive experiences.
+        </p>
+
+        <!-- ✨ Resume Button -->
+        <a href="../../../assets/pdf/gautamresume.pdf" target="_blank" class="resume-btn">
+          Download Resume ↗
+        </a>
+
+        <!-- ✨ Tech Icons / Badges -->
+        <div class="tech-stack">
+          Angular • TypeScript • SCSS • HTML • Three.js • Postman
+        </div>
+      </div>
+
+      <!-- Links -->
+      <div class="footer-links">
+
+        <div class="col">
+          <h4>Portfolio</h4>
+          <a (click)="scrollToProject()">Projects</a>
+          <a (click)="scrollToAbout()">About Me</a>
+          <a (click)="scrollToSkill()">Skills</a>
+        </div>
+
+        <div class="col">
+          <h4>Connect</h4>
+
+          <a href="mailto:gautamjain6183@gmail.com">Email</a>
+
+          <a href="https://www.linkedin.com/in/gautam-jain-9128b91a5/"
+             target="_blank" rel="noopener noreferrer">LinkedIn</a>
+
+          <a href="https://x.com/GautamJ43697059"
+             target="_blank" rel="noopener noreferrer">Twitter</a>
+
+          <!-- ✨ NEW GitHub -->
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a>
+        </div>
+
+      </div>
+
     </div>
-
-    <div class="footer-links">
-
-      <div class="col">
-        <h4>Portfolio</h4>
-        <a href="#">Projects</a>
-        <a href="#">Case Studies</a>
-        <a href="#">Experiments</a>
-      </div>
-
-      <div class="col">
-        <h4>Expertise</h4>
-        <a href="#">Angular Dev</a>
-        <a href="#">Motion UI</a>
-      </div>
-
-      <div class="col">
-        <h4>Connect</h4>
-        <a href="#">Email</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">GitHub</a>
-        <a href="#">Twitter</a>
-      </div>
-
-    </div>
-
-  </div>
   </div>
 
   <!-- SOCIAL + LEGAL -->
   <div class="mid-section">
+    <div class="footer-bottom container">
 
-      <div class="footer-bottom container">
-    <div class="legal-text">
-      © 2025 Gautam Jain. All rights reserved.
+      <!-- ✨ NEW credit text -->
+      <div class="credit">
+        Designed & Developed by Gautam Jain
+      </div>
+
+      <div class="legal-text">
+        © 2025 Gautam Jain. All rights reserved.
+      </div>
     </div>
-  </div>
   </div>
 
 </footer>

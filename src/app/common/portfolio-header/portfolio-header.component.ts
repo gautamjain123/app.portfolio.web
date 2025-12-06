@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
 
 @Component({
@@ -10,49 +10,40 @@ import { Router, RouterLink } from "@angular/router";
 })
 export class PortfolioHeaderComponent {
   menuOpen = false;
+
   constructor(private router: Router) {}
 
+  private scrollToSection(sectionId: string) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
 
-  scrollToProject() {
-    const section = document.getElementById('projects');
-    const yOffset = -80; // Adjust based on your header height
-
-    const y = section!.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    const yOffset = -80;
+    const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
     window.scrollTo({ top: y, behavior: 'smooth' });
   }
-  scrollToHome() {
+
+  private navigateAndScroll(targetId: string) {
     const isHome = this.router.url === '/' || this.router.url.includes('home');
 
     if (!isHome) {
-      // Navigate home first
       this.router.navigate(['/']).then(() => {
-        setTimeout(() => this.executeScroll(), 300);
+        setTimeout(() => this.scrollToSection(targetId), 300);
       });
     } else {
-      this.executeScroll();
+      this.scrollToSection(targetId);
     }
   }
 
-  private executeScroll() {
-    const section = document.getElementById('home');
-
-    if (!section) return;
-
-    const yOffset = -80; // adjust header height
-    const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-    window.scrollTo({
-      top: y,
-      behavior: 'smooth'
-    });
+  scrollToHome() {
+    this.navigateAndScroll('home');
   }
+
+  scrollToProject() {
+    this.navigateAndScroll('projects');
+  }
+
   scrollToAbout() {
-    const section = document.getElementById('about');
-    const yOffset = -80; // Adjust based on your header height
-
-    const y = section!.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-    window.scrollTo({ top: y, behavior: 'smooth' });
+    this.navigateAndScroll('about');
   }
 }

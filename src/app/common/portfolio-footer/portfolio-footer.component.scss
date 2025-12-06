@@ -2,14 +2,14 @@
   background: #050816;
   position: relative;
   color: #dce4ff;
-  padding-top: 80px;
+  padding-top: 20px;
   overflow: hidden;
 }
 
 /* CTA AREA */
 .footer-cta {
   text-align: center;
-  margin-bottom: 170px;
+  margin-bottom: 120px;
   position: relative;
   z-index: 2;
 }
@@ -58,7 +58,7 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 60%;
+  width: 70%;
   opacity: 0.85;
   pointer-events: none;
 }
@@ -82,27 +82,26 @@
 
 /* Branding */
 .footer-brand .logo {
-  font-size: 28px;
   font-weight: 700;
-  margin-bottom: 15px;
-  background: linear-gradient(90deg, #7dd3fc, #6366f1);
+  font-size: 24px;
+  background: linear-gradient(90deg, #7dd3fc, #6366f1, #9d4edd);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .footer-links {
   display: flex;
-  gap: 60px;
+  gap: 50px;
 }
 
 .footer-links h4 {
-  font-size: 16px;
+  font-size: 50px;
   margin-bottom: 10px;
 }
 
 .footer-links a {
   display: block;
-  font-size: 14px;
+  font-size: 22px;
   opacity: 0.75;
   margin-bottom: 6px;
   text-decoration: none;
@@ -141,6 +140,42 @@
   filter: blur(5px);
   opacity: 0;
   pointer-events: none;
+}
+.mini-bio {
+  margin-top: 10px;
+  font-size: 14px;
+  opacity: 0.75;
+  max-width: 200px;
+}
+
+.resume-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 14px;
+  font-size: 13px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 6px;
+  opacity: 0.85;
+  transition: 0.25s;
+  text-decoration: none;
+  color: white;
+}
+
+.resume-btn:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.6);
+}
+
+.tech-stack {
+  margin-top: 14px;
+  font-size: 12px;
+  opacity: 0.65;
+  max-width: 240px;
+}
+
+.credit {
+  opacity: 0.85;
 }
 
 .mid-section::after {
@@ -196,6 +231,15 @@
   .footer-bg {
     width: 75%;
   }
+
+  .mini-bio {
+
+  max-width: 100%;
+}
+
+.tech-stack {
+  max-width: 100%;
+}
 }
 
 /* 📌 Mobile Screens (≤ 768px) */
