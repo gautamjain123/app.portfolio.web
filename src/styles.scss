@@ -12,3 +12,24 @@ font-family: Urbanist;
 }
 
 html, body { height: 100%; }
+/* Default scrollbar styles (hidden when not scrolling) */
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* Keeps the track invisible */
+ }
+ 
+ ::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: transparent; /* Keeps the thumb invisible by default */
+    transition: background 0.3s ease-in-out; /* Smooth appearance */
+    position: absolute;
+    z-index: 9999; /* Ensures the thumb comes over the content */
+    width: 0px;
+ }
+ 
+ /* Show thumb when scrolling */
+ html.scrolling ::-webkit-scrollbar-thumb {
+    background: var(--brand-color); /* Color when scrolling */
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2); /* Optional: Adds a shadow effect */
+ }
+ 

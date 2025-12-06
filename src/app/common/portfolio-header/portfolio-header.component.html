@@ -2,7 +2,7 @@
   <div class="container">
 
     <!-- Brand -->
-    <a class="navbar-brand brand-gradient" href="#">
+    <a class="navbar-brand brand-gradient" [routerLink]="''">
       GJ
     </a>
 
@@ -19,19 +19,19 @@
       <ul class="navbar-nav gap-lg-4 gap-2 text-center">
 
         <li class="nav-item">
-          <a class="nav-link nav-glow" href="#home">Home</a>
+          <a class="nav-link nav-glow" (click)="scrollToHome()">Home</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link nav-glow" href="#about">About</a>
+          <a class="nav-link nav-glow" (click)="scrollToAbout()">About</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link nav-glow" href="#projects">Projects</a>
+          <a class="nav-link nav-glow" (click)="scrollToProject()">Projects</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link nav-glow" href="#contact">Contact</a>
+          <a class="nav-link nav-glow" [routerLink]="'contact-me'">Contact</a>
         </li>
 
       </ul>

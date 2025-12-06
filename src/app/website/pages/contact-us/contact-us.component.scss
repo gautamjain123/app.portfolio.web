@@ -1,0 +1,126 @@
+.contact-section {
+  padding: 120px 0;
+  background: #050816;
+  color: white;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: flex-start;
+}
+
+.contact-info h2 {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: #9ca3af;
+  margin-bottom: 24px;
+  font-size: 18px;
+}
+
+.contact-highlights li {
+  list-style: none;
+  margin-bottom: 8px;
+  color: #10b981;
+  font-weight: 500;
+}
+
+.alt-contact {
+  margin-top: 20px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  a {
+    color: #22d3ee;
+    text-decoration: none;
+  }
+}
+
+/* FORM */
+.contact-form {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 32px;
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(34, 211, 238, 0.15);
+  box-shadow: 0 12px 30px rgba(0,255,180,0.08);
+}
+
+.form-floating {
+  position: relative;
+  margin-bottom: 20px;
+
+  input, textarea {
+    width: 100%;
+    padding: 16px 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+    color: white;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+
+  textarea {
+    height: 120px;
+    resize: none;
+  }
+
+  label {
+    position: absolute;
+    left: 10px;
+    top: 16px;
+    color: #9ca3af;
+    pointer-events: none;
+    transition: 0.25s ease;
+  }
+
+  input:focus + label,
+  input:not(:placeholder-shown) + label,
+  textarea:focus + label,
+  textarea:not(:placeholder-shown) + label {
+    top: -6px;
+    font-size: 12px;
+    color: #22d3ee;
+  }
+}
+
+.send-btn {
+  background: #22d3ee;
+  color: #050816;
+  padding: 14px 26px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+  width: 100%;
+}
+
+.send-btn:hover {
+  background: linear-gradient(90deg, #0ea5e9, #6d28d9);
+  color: white;
+}
+
+.success-message {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #10b981;
+  animation: fadein 0.5s ease;
+}
+
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}

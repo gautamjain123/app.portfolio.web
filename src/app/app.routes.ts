@@ -11,6 +11,11 @@ export const routes: Routes = [
                 // component:IasHomepageComponent,
                 loadComponent: () => import('./website/pages/home-layout/landing-page/landing-page.component').then(m => m.LandingPageComponent)
             },
+            {
+                path: 'contact-me',
+                // component:IasHomepageComponent,
+                loadComponent: () => import('./website/pages/contact-us/contact-us.component').then(m => m.ContactUsComponent)
+            },
         ],
     },
 ];

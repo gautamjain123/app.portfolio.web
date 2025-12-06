@@ -13,6 +13,7 @@ import { isPlatformBrowser } from '@angular/common';
 
 import * as THREE from 'three';
 import { OrbitControls, GLTFLoader } from 'three-stdlib';
+import gsap from 'gsap';
 
 @Component({
   selector: 'app-portfolio-hero',
@@ -25,7 +26,10 @@ export class PortfolioHeroComponent implements AfterViewInit, OnDestroy {
   @ViewChild('bgCanvas', { static: true })
   canvasRef!: ElementRef<HTMLCanvasElement>;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any) {}
+  @ViewChild('resumeExplosion')
+  explosionCanvas!: ElementRef<HTMLCanvasElement>;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: any) { }
 
   private renderer!: THREE.WebGLRenderer;
   private scene!: THREE.Scene;
@@ -46,9 +50,10 @@ export class PortfolioHeroComponent implements AfterViewInit, OnDestroy {
 
   private scrollProgress = 0;
 
-  // idle animation
   private idleTime = 0;
   private idleAutoMotion = 0.05;
+
+  private explosionParticles: any[] = [];
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -72,24 +77,16 @@ export class PortfolioHeroComponent implements AfterViewInit, OnDestroy {
     this.scene.background = new THREE.Color(0x050816);
     this.scene.fog = new THREE.Fog(0x050816, 8, 22);
 
-    this.camera = new THREE.PerspectiveCamera(
-      60,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      100
-    );
+    this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
     this.camera.position.set(0, 0.8, 6);
 
-    this.renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true
-    });
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 
     this.controls = new OrbitControls(this.camera, canvas);
     this.controls.enableZoom = false;
-       this.controls.enablePan = false;
+    this.controls.enablePan = false;
     this.controls.minPolarAngle = Math.PI / 3;
     this.controls.maxPolarAngle = Math.PI / 2;
     this.controls.autoRotate = true;
@@ -129,6 +126,88 @@ export class PortfolioHeroComponent implements AfterViewInit, OnDestroy {
     this.scene.add(this.particles);
   }
 
+  explodeResume(button: HTMLElement) {
+    const canvas = this.explosionCanvas.nativeElement;
+    const ctx = canvas.getContext("2d")!;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const buttonRect = button.getBoundingClientRect();
+
+    this.explosionParticles = [];
+
+    for (let i = 0; i < 120; i++) {
+      this.explosionParticles.push({
+        x: buttonRect.left + buttonRect.width / 2,
+        y: buttonRect.top + buttonRect.height / 2,
+        size: Math.random() * 5 + 2,
+        speedX: (Math.random() - 0.5) * 14,
+        speedY: (Math.random() - 0.5) * 14,
+        opacity: 1,
+        color: `hsl(${120 + Math.random() * 80}, 100%, 60%)`
+      });
+    }
+
+    const animateExplosion = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      this.explosionParticles.forEach((p) => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.opacity -= 0.02;
+        p.size *= 0.93;
+
+        if (p.opacity > 0) {
+          ctx.shadowBlur = 18;
+          ctx.shadowColor = p.color;
+          ctx.fillStyle = p.color.replace("hsl", "hsla").replace(")", `,${p.opacity})`);
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+
+      if (this.explosionParticles.some((p) => p.opacity > 0)) {
+        requestAnimationFrame(animateExplosion);
+      }
+    };
+
+    animateExplosion();
+
+    gsap.to(button, {
+      opacity: 0,
+      scale: 0.7,
+      duration: 0.25,
+      ease: "power2.in"
+    });
+
+    setTimeout(() => {
+      this.downloadResume();
+
+      gsap.to(button, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+        ease: "elastic.out(1, 0.4)"
+      });
+    }, 450);
+  }
+
+  downloadResume() {
+    const link = document.createElement("a");
+    link.href = "../../../../assets/pdf/gautamresume.pdf";
+    link.download = "Gautam-Jain-Resume.pdf";
+    link.click();
+  }
+  scrollToCategory() {
+    const section = document.getElementById('projects');
+    const yOffset = -80; // Adjust based on your header height
+
+    const y = section!.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
   private loadAvatar(): void {
     const loader = new GLTFLoader();
 
@@ -156,46 +235,40 @@ export class PortfolioHeroComponent implements AfterViewInit, OnDestroy {
   private animate = (): void => {
     const delta = this.clock.getDelta();
 
-    // Idle Auto floating
     this.idleTime += 0.003;
     const autoX = Math.sin(this.idleTime) * this.idleAutoMotion;
     const autoY = Math.cos(this.idleTime * 0.8) * this.idleAutoMotion;
 
-    /** Glow pulse */
     if (this.avatar) {
       const pulse = (Math.sin(Date.now() * 0.0011) + 1) * 0.25;
       this.avatar.traverse((child: any) => {
         if (child.isMesh) child.material.emissiveIntensity = pulse;
       });
 
-      // Updated vertical logic
       const hoverY = (this.scrollProgress * 0.6) + this.parallaxTarget.y + autoY;
       this.avatar.position.x += ((this.parallaxTarget.x + autoX) - this.avatar.position.x) * 0.12;
       this.avatar.position.y += (hoverY - this.avatar.position.y) * 0.06;
     }
 
-    /** Fog */
     this.particles.rotation.y += 0.00025;
     this.particles.position.x += ((this.parallaxTarget.x * 1.2 + autoX * 4) - this.particles.position.x) * 0.05;
 
     const fogDepth = -this.scrollProgress * 4;
     this.particles.position.z += (fogDepth - this.particles.position.z) * 0.04;
 
-    /** Grid */
     if (this.grid) {
       const t = this.hoverEffect;
       this.grid.scale.set(1 + t * 0.2, 1, 1 + t * 0.2);
       (this.grid.material as THREE.Material).opacity = 0.6 + t * 0.4;
 
-      // NEW — downward motion works now
       const gridY = this.parallaxTarget.y * 0.8 - (this.scrollProgress * 1.5);
-      this.grid.position.x += ((this.parallaxTarget.x * 0.6 + autoX * 2) - this.grid.position.x) * 0.05;
+      this.grid.position.x += ((this.parallaxTarget.x * 0.6 + autoX * 2)
+        - this.grid.position.x) * 0.05;
       this.grid.position.y += (gridY - this.grid.position.y) * 0.05;
     }
 
     if (this.mixer) this.mixer.update(delta);
 
-    /** Camera scroll zoom + free Y movement */
     const minZoom = 3;
     const maxZoom = 6;
     const zoomTarget = maxZoom - (this.scrollProgress * 2);
@@ -203,7 +276,8 @@ export class PortfolioHeroComponent implements AfterViewInit, OnDestroy {
     this.camera.position.z += (clampedZoom - this.camera.position.z) * 0.05;
 
     const camY = this.parallaxTarget.y * 0.8 + autoY * 2;
-    this.camera.position.x += ((this.parallaxTarget.x * 1.2 + autoX * 3) - this.camera.position.x) * 0.05;
+    this.camera.position.x += ((this.parallaxTarget.x * 1.2 + autoX * 3)
+      - this.camera.position.x) * 0.05;
     this.camera.position.y += (camY - this.camera.position.y) * 0.04;
 
     this.controls.update();
@@ -216,7 +290,6 @@ export class PortfolioHeroComponent implements AfterViewInit, OnDestroy {
     this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     this.mouse.y = (event.clientY / window.innerHeight) * 2 - 1;
 
-    // Allow downward motion instead of clamped
     this.parallaxTarget.x = this.mouse.x * 1.2;
     this.parallaxTarget.y = -this.mouse.y * 1.5;
   }

@@ -1,14 +1,16 @@
-<section class="case-section">
+<section class="case-section" id="projects">
 
   <div class="container">
 
-    <div class="case-label">PROJECTS THAT MATTER</div>
-    <h2 class="case-heading">Case Studies</h2>
+    <div class="case-label">CRAFTED WITH PURPOSE</div>
+    <h2 class="about-heading">Featured <span class="shine">Impact Projects</span>
+    </h2>
+    <span class="subtitle">Your work shaping real digital experiences</span>
 
     <div class="case-list">
 
       <div 
-        class="case-item"
+        class="case-item mt-4"
         *ngFor="let project of projects; index as i"
         [ngClass]="{ 'reverse': i % 2 === 1 }"
       >
@@ -21,10 +23,17 @@
           <div class="case-tech">
             <span *ngFor="let t of project.tech">{{ t }}</span>
           </div>
+
+          <a class="case-link" [href]="project.link" style="text-decoration: none;" target="_blank"> → View Project </a>
         </div>
 
         <!-- Showcase Side -->
-        <div class="case-showcase"></div>
+        <div class="case-showcase">
+          <div class="case-preview">
+                <img [src]="project.img" alt="{{ project.title }}" />
+
+          </div>
+        </div>
 
       </div>
 

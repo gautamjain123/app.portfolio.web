@@ -1,0 +1,61 @@
+<section class="contact-section" id="contact">
+    <div class="container contact-grid">
+
+        <!-- LEFT INFO PANEL -->
+        <div class="contact-info">
+            <h2>Let’s Build Something Extraordinary</h2>
+            <p class="subtitle">
+                Have a project, partnership idea or just want to say hi?
+                Drop me a message — I reply within 24 hours.
+            </p>
+
+            <ul class="contact-highlights">
+                <li>✔ Fast project execution</li>
+                <li>✔ Experience in GovTech, SaaS & UI Engineering</li>
+                <li>✔ Open for Freelance / Full-time</li>
+            </ul>
+
+            <div class="alt-contact">
+                <span>Prefer direct contact?</span>
+                <a href="mailto:gautamjain@gmail.com">📩 Email</a>
+                <a href="tel:+919876543210">📞 Call</a>
+            </div>
+        </div>
+
+        <!-- RIGHT FORM PANEL -->
+        <form class="contact-form" (ngSubmit)="submitForm()" #contactForm="ngForm">
+
+            <div class="form-floating">
+                <input type="text" name="name" [(ngModel)]="form.name" required />
+                <label>Your Name</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="email" name="email" [(ngModel)]="form.email" required />
+                <label>Email Address</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="text" name="subject" [(ngModel)]="form.subject" />
+                <label>Subject</label>
+            </div>
+
+            <div class="form-floating textarea">
+                <textarea name="message" [(ngModel)]="form.message" required></textarea>
+                <label>Your Message</label>
+            </div>
+
+            <button type="submit" [disabled]="loading" class="send-btn">
+                <span *ngIf="!loading">Send Message ✦</span>
+                <span *ngIf="loading">Sending...</span>
+            </button>
+
+            <p class="success-msg" *ngIf="sent">
+                Message sent successfully ✨
+            </p>
+
+
+        </form>
+
+    </div>
+</section>

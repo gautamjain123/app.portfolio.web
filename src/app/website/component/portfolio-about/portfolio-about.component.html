@@ -1,4 +1,4 @@
-<section class="about-section py-5">
+<section class="about-section py-5" id="about">
   <div class="bg-accent left"></div>
   <div class="bg-accent right"></div>
   <div class="floating-particles"></div>
@@ -37,8 +37,8 @@
 
     <!-- Buttons -->
     <div class="about-actions">
-      <a href="#projects" class="btn btn-gradient">Explore Work</a>
-      <a href="#contact" class="btn btn-outline-light">Connect</a>
+      <a  class="btn btn-gradient" (click)="scrollToProject()">Explore Work</a>
+      <a class="btn btn-gradient" [routerLink]="'contact-me'">Connect</a>
     </div>
 
   </div>
