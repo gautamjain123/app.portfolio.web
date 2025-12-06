@@ -127,6 +127,14 @@ export class PortfolioHeroComponent implements AfterViewInit, OnDestroy {
   }
 
   explodeResume(button: HTMLElement) {
+
+    // 🔥 MOBILE/TABLET → DIRECT DOWNLOAD (NO ANIMATION)
+    if (this.isMobileOrTablet()) {
+      this.downloadResume();
+      return;
+    }
+
+    // ✔ Desktop explosion animation logic
     const canvas = this.explosionCanvas.nativeElement;
     const ctx = canvas.getContext("2d")!;
 
@@ -200,14 +208,14 @@ export class PortfolioHeroComponent implements AfterViewInit, OnDestroy {
     link.download = "Gautam-Jain-Resume.pdf";
     link.click();
   }
+
   scrollToCategory() {
     const section = document.getElementById('projects');
-    const yOffset = -80; // Adjust based on your header height
-
+    const yOffset = -80;
     const y = section!.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
     window.scrollTo({ top: y, behavior: 'smooth' });
   }
+
   private loadAvatar(): void {
     const loader = new GLTFLoader();
 
@@ -236,8 +244,8 @@ export class PortfolioHeroComponent implements AfterViewInit, OnDestroy {
     const delta = this.clock.getDelta();
 
     this.idleTime += 0.003;
-    const autoX = Math.sin(this.idleTime) * this.idleAutoMotion;
-    const autoY = Math.cos(this.idleTime * 0.8) * this.idleAutoMotion;
+    const autoX = Math.sin(this.idleTime) * 0.05;
+    const autoY = Math.cos(this.idleTime * 0.8) * 0.05;
 
     if (this.avatar) {
       const pulse = (Math.sin(Date.now() * 0.0011) + 1) * 0.25;
@@ -305,5 +313,15 @@ export class PortfolioHeroComponent implements AfterViewInit, OnDestroy {
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  // 📌 Improved detection for Mobile/Tablet
+  isMobileOrTablet(): boolean {
+    return (
+      window.innerWidth <= 1024 ||
+      /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    );
   }
 }
