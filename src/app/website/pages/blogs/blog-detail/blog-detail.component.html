@@ -1,0 +1,36 @@
+<section class="article-wrapper" *ngIf="blog">
+
+  <!-- Hero Section -->
+  <header class="article-hero">
+    <img [src]="blog.cover" alt="{{ blog.title }}" />
+    <div class="overlay"></div>
+    <div class="hero-text">
+      <h1>{{ blog.title }}</h1>
+      <p>{{ blog.date | date }}</p>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="article-container">
+
+      <a class="back-link" [routerLink]="'/blog'">
+    ← Back to Blogs
+  </a>
+
+    <!-- Author Box -->
+    <aside class="author-box">
+      <div class="avatar">
+        <img src="../../../../../assets/logo/profile-image.jpg" alt="Author" />
+      </div>
+      <div>
+        <h4>Written by Gautam Jain</h4>
+        <p>Frontend Developer & Experience Builder</p>
+      </div>
+    </aside>
+
+    <!-- Article -->
+    <article class="article-body" [innerHTML]="blog.content"></article>
+
+  </main>
+
+</section>

@@ -1,0 +1,26 @@
+<section class="blog-section">
+  <h2 class="section-title">Insights & Stories</h2>
+
+  <div class="blog-container">
+    <div class="blog-row" *ngFor="let blog of blogs" (click)="openPost(blog.slug)">
+      
+      <div class="image-wrapper">
+        <img [src]="blog.cover" alt="{{blog.title}}">
+      </div>
+
+      <div class="content-box">
+        <div class="tag-box">
+          <span *ngFor="let t of blog.tags">{{t}}</span>
+        </div>
+
+        <h3>{{blog.title}}</h3>
+        <p>{{blog.excerpt}}</p>
+
+        <div class="meta">
+          <span>{{blog.date | date}}</span>
+          <button class="read-btn">Read →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

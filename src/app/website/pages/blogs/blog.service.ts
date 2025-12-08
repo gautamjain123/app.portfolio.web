@@ -1,0 +1,183 @@
+import { Injectable } from '@angular/core';
+
+// ✅ Interface declared OUTSIDE class (but in same file)
+export interface Blog {
+  id: number;
+  slug: string;
+  title: string;
+  excerpt: string;
+  cover: string;
+  date: string;
+  tags: string[];
+  content: string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BlogService {
+
+  // ✅ Blog data stored directly in service
+  private blogs: Blog[] = [
+    {
+      id: 1,
+      slug: 'ai-changing-frontend-development',
+      title: 'How AI Is Changing Frontend Development (And What Developers Should Learn Next)',
+      excerpt: 'AI tools are not replacing frontend developers — they are transforming how we build UI.',
+      cover: '../../../../assets/images/ai_changing.png',
+      date: '2025-01-25',
+      tags: ['AI', 'Web Development', 'Future Tech'],
+      content: `
+  <p>AI has evolved from concept to coworker. It is no longer a futuristic buzz — it is quietly rewriting how 
+  frontend development works, making workflows faster, intuitive and more data—driven.</p>
+
+  <p>Instead of asking “Will AI replace developers?” the better question is:
+  “Which developers will learn to use AI, and which ones will get replaced?”</p>
+
+  <h2>1. AI—Powered Code Generation — Not Just Autocomplete</h2>
+  <p>From snippet generation and component scaffolding to API integration and test generation,
+  tools like GitHub Copilot, ChatGPT and Cursor are reshaping how developers start projects.</p>
+
+  <p><strong>AI is no longer a suggestion tool — it is a thinking assistant.</strong></p>
+
+  <ul>
+    <li>Generate boilerplate files in seconds</li>
+    <li>Refactor and optimise completed code</li>
+    <li>Explain code blocks like a mentor</li>
+    <li>Produce documentation based on your logic</li>
+  </ul>
+
+  <p>This means a developer’s value moves from typing speed to system thinking ability.</p>
+
+  <h2>2. Smart UI Design Suggestions & UX Support</h2>
+  <p>AI tools are analysing UI behaviour and giving feedback like:</p>
+
+  <ul>
+    <li>Accessibility warnings</li>
+    <li>Alignment/sizing issues</li>
+    <li>UI density adjustments</li>
+    <li>Colour contrast suggestions based on standards</li>
+  </ul>
+
+  <p>Design tools like Figma, Framer and Uizard are embedding AI to auto—generate layouts 
+  based on natural language prompts.</p>
+
+  <blockquote>“When UI becomes AI—generated, custom UX thinking becomes your competitive edge.”</blockquote>
+
+  <h2>3. Will AI Replace Developers?</h2>
+  <p>AI will replace:</p>
+  <ul>
+    <li>Repetitive coding</li>
+    <li>Manual documentation</li>
+    <li>Basic debugging</li>
+  </ul>
+
+  <p>But it cannot replace:</p>
+  <ul>
+    <li>Architecture decisions</li>
+    <li>Creative problem solving</li>
+    <li>User empathy and experience thinking</li>
+    <li>Understanding business logic</li>
+  </ul>
+
+  <p><strong>AI augments developers — it does not erase them.</strong></p>
+
+  <h2>4. Real—World Impact On Job Skills</h2>
+  <p>The new “top skills” required are shifting:</p>
+
+  <ul>
+    <li>Prompt engineering — communicating intent properly</li>
+    <li>System thinking — understanding how parts connect</li>
+    <li>Reviewing AI output — judgement > typing</li>
+    <li>Rapid prototyping — shipping faster</li>
+  </ul>
+
+  <p>Those who learn these skills will build better products faster.</p>
+
+  <h2>5. What Should Developers Learn Next?</h2>
+
+  <p>To stay relevant, frontend engineers must expand beyond code.</p>
+
+  <ul>
+    <li><strong>AI—assisted development:</strong> experiment with Copilot, Replit AI, ChatGPT</li>
+    <li><strong>Product & UX thinking:</strong> understand user intent, empathy, and journeys</li>
+    <li><strong>Automation:</strong> scripts, generator tools, reusable dev workflows</li>
+    <li><strong>Communication:</strong> because prompting is the new coding language</li>
+  </ul>
+
+  <blockquote>“The developers who thrive aren’t the ones who write the most code, 
+  but the ones who can <strong>build the smartest systems with the least typing</strong>.”</blockquote>
+
+  <h2>6. The Future — AI as Pair Programmer, Not Replacement</h2>
+  <p>AI will be:</p>
+
+  <ul>
+    <li>Pair—programmer for debugging</li>
+    <li>UX reviewer during development</li>
+    <li>A prototype engine for ideas</li>
+    <li>A validator for logic and security</li>
+  </ul>
+
+  <p>But humans will remain responsible for:</p>
+  <ul>
+    <li>Project vision</li>
+    <li>Ethics</li>
+    <li>Experience design</li>
+    <li>Innovation</li>
+  </ul>
+
+  <p>The development space is transforming — <strong>not replacing — but elevating</strong>.</p>
+
+  <h2>Final Thought</h2>
+  <p>AI is not your competition.</p>
+  <p>It is your amplifier — turning you into a faster, clearer, more strategic engineer.</p>
+
+  <p>The only developers at risk are those who refuse to adapt.</p>
+
+  <p><strong>The ones who learn to use AI will lead the next generation of frontend engineering.</strong></p>
+`
+
+    },
+    {
+      id: 2,
+      slug: 'website-speed-new-seo',
+      title: 'Why Website Speed Is the New SEO (How Google Actually Ranks You)',
+      excerpt: 'Faster websites convert more, rank higher, and deliver better user satisfaction.',
+      cover: '../../../../assets/images/google-spped.png',
+      date: '2025-02-02',
+      tags: ['SEO', 'Performance', 'Web'],
+      content: `
+    <p>Search ranking is no longer about keywords alone — performance metrics now dominate SEO.</p>
+
+    <h2>1. Core Web Vitals Are Ranking Factors</h2>
+    <p>Google evaluates your site on:
+      LCP (Load speed), CLS (Visual stability), and FID (Interaction delay).</p>
+
+    <h2>2. Why Users Leave Slow Sites</h2>
+    <ul>
+      <li>53% abandon if it takes more than 3 seconds to load.</li>
+      <li>Mobile patience is even lower — 2 seconds.</li>
+    </ul>
+
+    <h2>3. Practical Speed Boosts</h2>
+    <p>Lazy loading, image compression, preloading routes, caching layers and async scripts.</p>
+
+    <blockquote>“Only developers who measure performance actually improve it.”</blockquote>
+
+    <p>The best SEO tactic in 2025 is building blazing-fast experiences.</p>
+  `
+    },
+  ];
+
+  constructor() { }
+
+  // ✅ Get all blogs
+  getBlogs(): Blog[] {
+    return this.blogs;
+  }
+
+  // ✅ Get single blog by slug
+  getBlogBySlug(slug: string): Blog | undefined {
+    return this.blogs.find(blog => blog.slug === slug);
+  }
+}

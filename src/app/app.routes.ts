@@ -16,6 +16,14 @@ export const routes: Routes = [
                 // component:IasHomepageComponent,
                 loadComponent: () => import('./website/pages/contact-us/contact-us.component').then(m => m.ContactUsComponent)
             },
+            {
+                path: 'blog',
+                children: [
+                    { path: '',  loadComponent: () => import('./website/pages/blogs/blog-list/blog-list.component').then(m => m.BlogListComponent) },
+                    { path: ':slug',  loadComponent: () => import('./website/pages/blogs/blog-detail/blog-detail.component').then(m => m.BlogDetailComponent) }
+                ]
+            }
+
         ],
     },
 ];
