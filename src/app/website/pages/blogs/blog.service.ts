@@ -167,6 +167,87 @@ export class BlogService {
     <p>The best SEO tactic in 2025 is building blazing-fast experiences.</p>
   `
     },
+    {
+      id: 3,
+      slug: 'psychology-of-trusting-ai',
+      title: 'Why We Believe AI Even When It’s Wrong — The Psychology of Machine Trust',
+      excerpt: 'Humans doubt humans but trust algorithms. Why do we believe AI, even when it lies?',
+      cover: '../../../../assets/images/ai-image.png', // save the generated image with this name
+      date: '2025-12-09',
+      tags: ['AI Psychology', 'Digital Behavior', 'Future Tech'],
+      content: `
+<p>We live in a strange moment — people argue with family, ignore experts, but blindly follow suggestions from Siri, Google, or ChatGPT. Why do humans trust machines more than humans?</p>
+
+<p>The answer lies in psychology, not technology.</p>
+
+<p>AI doesn’t think—it predicts. Unlike humans, it never says “I’m not sure.” Instead, it confidently fills gaps with the most statistically likely answer. The result? We mistake confidence for correctness. That’s why AI can be wrong, yet still persuasive.</p>
+
+
+<h2>1. Algorithm Authority Bias — Machines Feel “Objective”</h2>
+<p>Humans have bias, ego, emotion. But algorithms appear neutral — even when they aren’t.</p>
+<p>When a system presents an answer confidently, the brain assumes:</p>
+
+<ul>
+  <li>Computers can’t lie</li>
+  <li>Machines don’t judge us</li>
+  <li>Technology is precise</li>
+</ul>
+
+<p>This illusion of objectivity gives AI psychological authority.</p>
+
+<blockquote>“Humans trust code because they assume it has no motive — even when the motive is hidden in design.”</blockquote>
+
+<h2>2. The Google Effect — Our Brain Outsourced Memory</h2>
+<p>Research shows people don’t store facts anymore — they store where to find them.</p>
+<p>This dependency creates a belief:</p>
+<p><strong>“If it came from Google (or AI), it must be true.”</strong></p>
+
+<p>We trust sources we rely on daily — repetition breeds credibility.</p>
+
+<h2>3. Confidence Bias — AI Never Doubts Itself</h2>
+<p>Humans hesitate, AI doesn’t.</p>
+<p>Even when wrong, AI phrases responses with certainty. The brain confuses certainty with correctness.</p>
+
+<h2>4. Low Social Risk — Machines Can’t Judge You</h2>
+<p>People fear looking stupid in front of other humans.</p>
+<p>Asking AI feels safer because there is:</p>
+<ul>
+  <li>No shame</li>
+  <li>No ego</li>
+  <li>No rejection</li>
+</ul>
+
+<p>So we subconsciously prefer machine help over human help — it protects our identity.</p>
+
+<h2>5. Familiarity = Trust</h2>
+<p>The more often we interact with something, the safer it feels.</p>
+<p>AI is everywhere — phones, cars, shopping, search. Ubiquity rewires trust pathways.</p>
+
+<h2>6. The Danger — We Believe AI Even When It’s Wrong</h2>
+<p>AI confidently invents facts, references, medical advice, and calculations — yet studies show people still follow it.</p>
+
+<blockquote>“Confidence is more influential than accuracy.”</blockquote>
+
+<h2>7. The Future — Trust Will Shift from Accuracy to Alignment</h2>
+<p>We will not trust AI because it is correct —  
+but because it aligns with <em>how we think</em> and <em>what we want to hear</em>.</p>
+
+<p>This brings a risk:</p>
+<ul>
+  <li>Echo chambers become algorithmically reinforced</li>
+  <li>AI becomes emotional validation instead of knowledge</li>
+  <li>People stop verifying truth</li>
+</ul>
+
+<h2>Final Thought</h2>
+<p>AI is not inherently trustworthy — 
+our minds simply evolved to trust confident, accessible, non-judgmental systems.</p>
+
+<p><strong>The real question is:</strong>  
+Are we using AI as a tool — or a replacement for thinking?</p>
+  `
+    }
+
   ];
 
   constructor() { }
