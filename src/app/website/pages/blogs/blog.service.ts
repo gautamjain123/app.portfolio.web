@@ -25,7 +25,7 @@ export class BlogService {
       title: 'How AI Is Changing Frontend Development (And What Developers Should Learn Next)',
       excerpt: 'AI tools are not replacing frontend developers — they are transforming how we build UI.',
       cover: '../../../../assets/images/ai_changing.png',
-      date: '2025-01-25',
+      date: '2025-12-08',
       tags: ['AI', 'Web Development', 'Future Tech'],
       content: `
   <p>AI has evolved from concept to coworker. It is no longer a futuristic buzz — it is quietly rewriting how 
