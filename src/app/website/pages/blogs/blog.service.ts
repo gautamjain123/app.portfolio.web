@@ -144,7 +144,7 @@ export class BlogService {
       title: 'Why Website Speed Is the New SEO (How Google Actually Ranks You)',
       excerpt: 'Faster websites convert more, rank higher, and deliver better user satisfaction.',
       cover: '../../../../assets/images/google-spped.png',
-      date: '2025-02-02',
+      date: '2025-12-10',
       tags: ['SEO', 'Performance', 'Web'],
       content: `
 <p>Search ranking is no longer about keywords alone <strong>performance is now one of Google’s strongest ranking signals.</strong>  
