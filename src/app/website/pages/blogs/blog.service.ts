@@ -276,7 +276,109 @@ our minds simply evolved to trust confident, accessible, non-judgmental systems.
 <p><strong>The real question is:</strong>  
 Are we using AI as a tool — or a replacement for thinking?</p>
   `
-    }
+    },
+
+{
+  id: 4,
+  slug: 'burnout-doesnt-come-from-coding-it-comes-from-context-switching',
+  title: 'Burnout Doesn’t Come From Coding — It Comes From Context Switching',
+  excerpt: 'Coding isn’t what exhausts developers. Meetings, notifications, tools, and constant task-switching slowly drain focus and energy.',
+  cover: '../../../../assets/images/worklife.png', // save image with this name
+  date: '2025-12-15',
+  tags: ['Work-Life Balance', 'Developer Wellness', 'Tech Culture'],
+  content: `
+<p>Most people think developers burn out because they code too much.</p>
+
+<p>That’s rarely true.</p>
+
+<p>Burnout doesn’t come from writing code for hours.  
+It comes from constantly stopping and restarting your brain.</p>
+
+<p><strong>It comes from context switching.</strong></p>
+
+<h2>What Context Switching Really Looks Like</h2>
+<p>Context switching isn’t just changing tasks — it’s changing <em>mental states</em>.</p>
+
+<p>A typical developer day looks like this:</p>
+<ul>
+  <li>Start coding</li>
+  <li>Slack notification</li>
+  <li>Quick meeting invite</li>
+  <li>Review someone else’s code</li>
+  <li>Back to your task — but the flow is gone</li>
+</ul>
+
+<p>You didn’t code less — you just never went deep.</p>
+
+<h2>Coding Creates Flow — Switching Breaks It</h2>
+<p>Deep coding is one of the few activities that creates flow.</p>
+
+<p>Flow is calm. Focused. Absorbing.</p>
+
+<p>Context switching does the opposite:</p>
+<ul>
+  <li>It increases cognitive load</li>
+  <li>It fragments attention</li>
+  <li>It creates mental residue</li>
+</ul>
+
+<p>Your brain keeps partially thinking about the previous task — even after you’ve moved on.</p>
+
+<blockquote>“You’re tired not because the work is hard, but because your attention never rests.”</blockquote>
+
+<h2>Tools Were Meant to Help — Not Interrupt</h2>
+<p>Ironically, many tools designed to improve productivity do the opposite.</p>
+
+<ul>
+  <li>Slack encourages instant responses</li>
+  <li>Project tools demand constant updates</li>
+  <li>Calendars slice days into tiny fragments</li>
+</ul>
+
+<p>Each tool is useful on its own.  
+Together, they create a constant state of alertness.</p>
+
+<h2>Multitasking Is the Fastest Path to Burnout</h2>
+<p>Multitasking feels productive — but it’s biologically expensive.</p>
+
+<p>Every switch has a cost:</p>
+<ul>
+  <li>More mistakes</li>
+  <li>Lower code quality</li>
+  <li>Longer recovery time</li>
+</ul>
+
+<p>The result is exhaustion without satisfaction.</p>
+
+<h2>Why This Is a Work-Life Balance Problem</h2>
+<p>Burnout isn’t always about working late.</p>
+
+<p>It’s about never mentally disconnecting.</p>
+
+<p>When your day is filled with interruptions, your brain stays in work mode even after logging off.</p>
+
+<p>You close your laptop — but the noise continues.</p>
+
+<h2>What Actually Helps</h2>
+<ul>
+  <li>Fewer meetings, not shorter ones</li>
+  <li>Clear focus blocks</li>
+  <li>Async communication when possible</li>
+  <li>Protecting uninterrupted coding time</li>
+</ul>
+
+<p>Good work-life balance starts with respecting attention — not just time.</p>
+
+<h2>Final Thought</h2>
+<p>Coding didn’t burn you out.</p>
+
+<p><strong>Constant interruption did.</strong></p>
+
+<p>Focus is not a luxury in tech — it’s a requirement.</p>
+`
+}
+
+
 
   ];
 
