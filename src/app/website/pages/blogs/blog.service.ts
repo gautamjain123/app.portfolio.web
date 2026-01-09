@@ -19,6 +19,7 @@ export class BlogService {
 
   // ✅ Blog data stored directly in service
   private blogs: Blog[] = [
+
     {
       id: 1,
       slug: 'ai-changing-frontend-development',
@@ -138,6 +139,7 @@ export class BlogService {
 `
 
     },
+
     {
       id: 2,
       slug: 'website-speed-new-seo',
@@ -197,6 +199,7 @@ Great SEO starts with Lighthouse, PageSpeed Insights, and real user monitoring.<
 <p>If your website loads instantly, Google rewards you, users stay longer, and conversions naturally rise.</p>
   `
     },
+
     {
       id: 3,
       slug: 'psychology-of-trusting-ai',
@@ -278,15 +281,15 @@ Are we using AI as a tool — or a replacement for thinking?</p>
   `
     },
 
-{
-  id: 4,
-  slug: 'burnout-doesnt-come-from-coding-it-comes-from-context-switching',
-  title: 'Burnout Doesn’t Come From Coding — It Comes From Context Switching',
-  excerpt: 'Coding isn’t what exhausts developers. Meetings, notifications, tools, and constant task-switching slowly drain focus and energy.',
-  cover: '../../../../assets/images/worklife.png', // save image with this name
-  date: '2025-12-15',
-  tags: ['Work-Life Balance', 'Developer Wellness', 'Tech Culture'],
-  content: `
+    {
+      id: 4,
+      slug: 'burnout-doesnt-come-from-coding-it-comes-from-context-switching',
+      title: 'Burnout Doesn’t Come From Coding — It Comes From Context Switching',
+      excerpt: 'Coding isn’t what exhausts developers. Meetings, notifications, tools, and constant task-switching slowly drain focus and energy.',
+      cover: '../../../../assets/images/worklife.png', // save image with this name
+      date: '2025-12-15',
+      tags: ['Work-Life Balance', 'Developer Wellness', 'Tech Culture'],
+      content: `
 <p>Most people think developers burn out because they code too much.</p>
 
 <p>That’s rarely true.</p>
@@ -376,9 +379,80 @@ Together, they create a constant state of alertness.</p>
 
 <p>Focus is not a luxury in tech — it’s a requirement.</p>
 `
-}
+    },
 
+    {
+      id: 5,
+      slug: 'most-tech-managers-dont-lead-they-bottleneck',
+      title: 'Most Tech Managers Don’t Lead They Bottleneck',
+      excerpt: 'In an AI-powered world, control-heavy tech management slows teams down. Real leadership is about systems, trust, and removing blockers.',
+      cover: '../../../../assets/images/TechLeadBalance.webp', // save image with this name
+      date: '2026-01-09',
+      tags: ['Tech Leadership', 'Engineering Management', 'Future of Work', 'AI'],
+      content: `
+<p><strong>Hot take:</strong> Most tech managers don’t fail because of bad technical decisions.</p>
 
+<p>They fail because they confuse <em>control</em> with <em>leadership</em>.</p>
+
+<p>In today’s AI-powered world, a Tech Lead’s job is no longer about tracking every task or reviewing every small decision.</p>
+
+<p><strong>It’s about designing systems where teams can move without you.</strong></p>
+
+<h2>What Bad Tech Leadership Looks Like</h2>
+<ul>
+  <li>Approving every PR personally</li>
+  <li>Monitoring hours instead of outcomes</li>
+  <li>Being the single point of decision-making</li>
+  <li>Jumping into every problem to “help”</li>
+</ul>
+
+<p>If your team slows down when you’re unavailable, that’s not reliability that’s dependency.</p>
+
+<h2>AI Didn’t Kill Leadership It Exposed Weak Leadership</h2>
+<p>AI can now:</p>
+<ul>
+  <li>Write boilerplate code</li>
+  <li>Detect bugs early</li>
+  <li>Automate deployments</li>
+</ul>
+
+<p>But it can’t create clarity.</p>
+<p>It can’t build trust.</p>
+<p>And it can’t design healthy engineering systems.</p>
+
+<p>That’s still the leader’s job.</p>
+
+<h2>Real Tech Leaders Remove Friction</h2>
+<p>Strong tech managers don’t try to be the smartest person in the room.</p>
+
+<p>They focus on:</p>
+<ul>
+  <li>Removing blockers</li>
+  <li>Reducing decision fatigue</li>
+  <li>Protecting deep work</li>
+  <li>Letting engineers think</li>
+</ul>
+
+<p>They build teams that can operate and even thrive without constant oversight.</p>
+
+<h2>The Bottleneck Test</h2>
+<p>Ask yourself honestly:</p>
+
+<blockquote>
+<p>Can my team ship confidently if I step away for a week?</p>
+</blockquote>
+
+<p>If the answer is no, the problem isn’t the team.</p>
+<p><strong>It’s the system.</strong></p>
+
+<h2>Final Thought</h2>
+<p>If AI can replace most of what you do as a tech manager, you weren’t leading.</p>
+
+<p>You were executing.</p>
+
+<p>Great tech leadership scales people not control.</p>
+`
+    }
 
   ];
 

@@ -29,6 +29,11 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "allowedCommonJsDependencies": [
+  "three",
+  "@mediapipe/hands",
+  "@mediapipe/camera_utils"
+],
             "styles": [
               "src/styles.scss"
             ],
