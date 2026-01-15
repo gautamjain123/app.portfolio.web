@@ -213,7 +213,7 @@ Great SEO starts with Lighthouse, PageSpeed Insights, and real user monitoring.<
 
 <p>The answer lies in psychology, not technology.</p>
 
-<p>AI doesn’t think—it predicts. Unlike humans, it never says “I’m not sure.” Instead, it confidently fills gaps with the most statistically likely answer. The result? We mistake confidence for correctness. That’s why AI can be wrong, yet still persuasive.</p>
+<p>AI doesn’t think—it predicts. Unlike humans, it never says “I’m not sure.” Instea d, it confidently fills gaps with the most statistically likely answer. The result? We mistake confidence for correctness. That’s why AI can be wrong, yet still persuasive.</p>
 
 
 <h2>1. Algorithm Authority Bias — Machines Feel “Objective”</h2>

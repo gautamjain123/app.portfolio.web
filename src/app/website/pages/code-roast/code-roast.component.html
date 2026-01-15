@@ -1,0 +1,47 @@
+<div class="card shadow-sm border-0">
+  <div class="card-body p-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <div>
+        <h4 class="fw-bold mb-0">💀 Roast My Code</h4>
+        <small class="text-muted">AI review for Angular / TS / HTML / CSS</small>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label fw-semibold">Review Mode</label>
+        <select class="form-select" [(ngModel)]="mode">
+          <option value="senior">Senior Dev Review</option>
+          <option value="roast">Roast Mode 💀</option>
+          <option value="interview">Interview Style</option>
+        </select>
+      </div>
+
+      <div class="col-md-8 text-md-end">
+        <button
+          class="btn btn-dark px-4 mt-4 mt-md-0"
+          (click)="roastCode()"
+          [disabled]="loading || !code.trim()"
+        >
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+          Roast 🔥
+        </button>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label fw-semibold">Paste your code</label>
+        <textarea
+          class="form-control font-monospace"
+          rows="10"
+          [(ngModel)]="code"
+          placeholder="Paste TypeScript / Angular / HTML / CSS code..."
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="mt-4" *ngIf="result">
+      <h6 class="fw-bold mb-2">✅ AI Review</h6>
+      <pre class="bg-light p-3 rounded border small mb-0" style="white-space: pre-wrap;">{{ result }}</pre>
+    </div>
+  </div>
+</div>

@@ -8,13 +8,15 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                // component:IasHomepageComponent,
                 loadComponent: () => import('./website/pages/home-layout/landing-page/landing-page.component').then(m => m.LandingPageComponent)
             },
             {
                 path: 'contact-me',
-                // component:IasHomepageComponent,
                 loadComponent: () => import('./website/pages/contact-us/contact-us.component').then(m => m.ContactUsComponent)
+            },
+            {
+                path: 'ai-lab',
+                loadComponent: () => import('./website/pages/ai-lab/ai-lab.component').then(m => m.AiLabComponent)
             },
             {
                 path: 'blog',
