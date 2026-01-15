@@ -1,1 +1,147 @@
-<p>interview-arena works!</p>
+<div class="ai-card">
+  <div class="ai-header">
+    <div>
+      <h4 class="mb-1 fw-bold title">🎯 Interview Arena</h4>
+      <p class="mb-0 subtitle">Practice Angular interviews with AI + score + streak</p>
+    </div>
+
+    <div class="d-flex gap-2 flex-wrap justify-content-end">
+      <span class="badge badge-soft">
+        ⏱ {{ formatTime(timerSec) }}
+      </span>
+
+      <span class="badge badge-soft">
+        🔥 Streak: <b class="ms-1">{{ streak }}</b>
+      </span>
+
+      <span class="badge badge-soft" *ngIf="modelUsed">
+        Model: <b class="ms-1">{{ modelUsed }}</b>
+      </span>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="ai-controls row g-3">
+    <div class="col-12 col-lg-5">
+      <label class="form-label fw-semibold text-white-50">Topic</label>
+      <input class="form-control ai-textarea" [(ngModel)]="topic" placeholder="Angular / RxJS / TS / HTML / CSS" />
+    </div>
+
+    <div class="col-12 col-lg-3">
+      <label class="form-label fw-semibold text-white-50">Difficulty</label>
+      <select class="form-select ai-select" [(ngModel)]="difficulty">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+    </div>
+
+    <div class="col-12 col-lg-4 d-flex align-items-end justify-content-lg-end gap-2">
+      <button class="btn btn-outline-light ai-btn" (click)="resetTimer()">Reset Timer</button>
+
+      <button class="btn btn-light ai-btn-primary" (click)="generateQuestion()" [disabled]="loadingQ">
+        <span *ngIf="loadingQ" class="spinner-border spinner-border-sm me-2"></span>
+        Generate Q
+      </button>
+    </div>
+  </div>
+
+  <div class="alert alert-danger mt-4" *ngIf="errorMsg">
+    <b>Error:</b> {{ errorMsg }}
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="arena-grid mt-4" *ngIf="question">
+    <!-- Left -->
+    <div class="arena-card">
+      <div class="arena-head">
+        <div class="arena-title">📌 Question</div>
+        <button class="mini-btn" (click)="copy(question)">Copy</button>
+      </div>
+
+      <div class="arena-body">
+        <div class="q">{{ question }}</div>
+
+        <div class="mt-3" *ngIf="keyPoints.length">
+          <div class="sub">✅ Key Points</div>
+          <ul class="list">
+            <li *ngFor="let k of keyPoints">{{ k }}</li>
+          </ul>
+        </div>
+
+        <div class="mt-3" *ngIf="followUps.length">
+          <div class="sub">🎯 Follow Ups</div>
+          <ul class="list">
+            <li *ngFor="let f of followUps">{{ f }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="arena-card">
+      <div class="arena-head">
+        <div class="arena-title">✍️ Your Answer</div>
+        <div class="d-flex gap-2">
+          <button class="mini-btn" (click)="copy(answer)">Copy</button>
+          <button class="mini-btn" (click)="pauseTimer()" *ngIf="timerRunning">Pause</button>
+          <button class="mini-btn" (click)="startTimer()" *ngIf="!timerRunning">Resume</button>
+        </div>
+      </div>
+
+      <div class="arena-body">
+        <textarea
+          class="form-control ai-textarea"
+          rows="12"
+          [(ngModel)]="answer"
+          placeholder="Write your answer like you're in a real interview..."
+        ></textarea>
+
+        <div class="d-flex justify-content-end mt-3">
+          <button
+            class="btn btn-light ai-btn-primary"
+            (click)="evaluate()"
+            [disabled]="loadingEval || !answer.trim()"
+          >
+            <span *ngIf="loadingEval" class="spinner-border spinner-border-sm me-2"></span>
+            Evaluate 🎯
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="mt-4" *ngIf="score && !loadingEval">
+    <div class="result-card">
+      <div class="result-top">
+        <div class="score">
+          ✅ Score: <b>{{ score }}</b>
+        </div>
+        <button class="mini-btn" (click)="copy(idealAnswer)">Copy Ideal</button>
+      </div>
+
+      <div class="result-body">
+        <div class="sub">🧠 Feedback</div>
+        <div class="text">{{ feedback }}</div>
+
+        <div class="mt-3" *ngIf="missingPoints.length">
+          <div class="sub">❌ Missing Points</div>
+          <ul class="list">
+            <li *ngFor="let m of missingPoints">{{ m }}</li>
+          </ul>
+        </div>
+
+        <div class="mt-3" *ngIf="idealAnswer">
+          <div class="sub">✅ Ideal Answer</div>
+          <pre class="raw">{{ idealAnswer }}</pre>
+        </div>
+
+        <div class="mt-3" *ngIf="nextQuestion">
+          <div class="sub">➡️ Next Question</div>
+          <div class="text">{{ nextQuestion }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

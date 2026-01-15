@@ -7,15 +7,11 @@
     </div>
 
     <div class="d-flex gap-2 flex-wrap justify-content-end">
-      <span class="badge badge-soft" *ngIf="componentName">
+      <span class="badge-soft" *ngIf="componentName">
         Component: <b class="ms-1">{{ componentName }}</b>
       </span>
 
-      <span class="badge badge-soft" *ngIf="modelUsed">
-        Model: <b class="ms-1">{{ modelUsed }}</b>
-      </span>
-
-      <span class="badge badge-soft" *ngIf="timeTakenMs">
+      <span class=" badge-soft" *ngIf="timeTakenMs">
         Time: <b class="ms-1">{{ timeTakenMs }}ms</b>
       </span>
     </div>

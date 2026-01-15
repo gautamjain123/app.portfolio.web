@@ -8,7 +8,7 @@ import { AiSnippetService } from '../../../common/service/ai-snippet.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './snippet-generator.component.html',
-    styleUrls: ['./snippet-generator.component.scss']
+  styleUrls: ['./snippet-generator.component.scss']
 })
 export class SnippetGeneratorComponent {
   prompt = '';
@@ -54,6 +54,12 @@ export class SnippetGeneratorComponent {
         this.scssCode = parsed.scss;
         this.notes = parsed.notes;
 
+        // ✅ fallback: if model doesn't follow structure still show output
+        if (!this.tsCode && !this.htmlCode && !this.scssCode) {
+          this.componentName = 'GeneratedComponent';
+          this.tsCode = output;
+        }
+
         this.loading = false;
       },
       error: (err) => {
@@ -84,38 +90,111 @@ export class SnippetGeneratorComponent {
     navigator.clipboard.writeText(text);
   }
 
+  // ✅ supports BOTH:
+  // ---TS--- OR #### TS formats
   private parseSnippetOutput(text: string) {
     const src = (text || '').trim();
 
-    const getBlock = (label: string, next?: string) => {
-      const start = new RegExp(`---${label}---`, 'i');
-      const nextRgx = next ? new RegExp(`---${next}---`, 'i') : null;
+    // remove intro like "Here's ..."
+    const cleaned = src.replace(/^Here.*?\n\n/gi, '').trim();
 
-      const startIndex = src.search(start);
-      if (startIndex === -1) return '';
+    // ✅ component name (---COMPONENT_NAME--- OR ### ComponentName)
+    let componentName = '';
 
-      const after = src.slice(startIndex);
-      const firstLine = after.split('\n')[0];
-      const remaining = after.slice(firstLine.length).trim();
+    const nameFromDash = this.extractBetween(cleaned, /---COMPONENT_NAME---/i, /---TS---/i);
+    if (nameFromDash) componentName = nameFromDash.trim();
 
-      if (!nextRgx) return remaining.trim();
+    if (!componentName) {
+      const nameMatch = cleaned.match(/^###\s*(.+)$/m);
+      componentName = nameMatch?.[1]?.trim() || '';
+    }
 
-      const nextIndex = remaining.search(nextRgx);
-      return nextIndex === -1 ? remaining.trim() : remaining.slice(0, nextIndex).trim();
-    };
+    componentName = componentName.replace(/[`"'<>]/g, '').trim() || 'GeneratedComponent';
 
-    const componentName = getBlock('COMPONENT_NAME', 'TS') || 'GeneratedStandaloneComponent';
-    const ts = getBlock('TS', 'HTML');
-    const html = getBlock('HTML', 'SCSS');
-    const scss = getBlock('SCSS', 'NOTES');
-    const notes = getBlock('NOTES');
+    // ✅ extract TS/HTML/SCSS/NOTES from both formats
+    const ts =
+      this.extractBlock(cleaned, 'TS', ['HTML']) ||
+      this.extractBlockByHeading(cleaned, 'TS', ['HTML']);
+
+    const html =
+      this.extractBlock(cleaned, 'HTML', ['SCSS']) ||
+      this.extractBlockByHeading(cleaned, 'HTML', ['SCSS']);
+
+    const scss =
+      this.extractBlock(cleaned, 'SCSS', ['NOTES']) ||
+      this.extractBlockByHeading(cleaned, 'SCSS', ['NOTES']);
+
+    const notes =
+      this.extractBlock(cleaned, 'NOTES', []) ||
+      this.extractBlockByHeading(cleaned, 'NOTES', []);
+
+    // ✅ strip ``` fences
+    const stripFences = (val: string) =>
+      (val || '')
+        .replace(/```[a-z]*\n?/gi, '')
+        .replace(/```/g, '')
+        .trim();
 
     return {
-      componentName: componentName.replace(/[`"'<>]/g, '').trim(),
-      ts,
-      html,
-      scss,
-      notes
+      componentName,
+      ts: stripFences(ts),
+      html: stripFences(html),
+      scss: stripFences(scss),
+      notes: stripFences(notes)
     };
+  }
+
+  /* ---------------- HELPERS ---------------- */
+
+  private extractBetween(text: string, start: RegExp, end: RegExp): string {
+    const startIndex = text.search(start);
+    if (startIndex === -1) return '';
+
+    const afterStart = text.slice(startIndex);
+    const startLine = afterStart.split('\n')[0];
+    const remaining = afterStart.slice(startLine.length).trim();
+
+    const endIndex = remaining.search(end);
+    return endIndex === -1 ? remaining.trim() : remaining.slice(0, endIndex).trim();
+  }
+
+  // for ---TS--- blocks
+  private extractBlock(text: string, label: string, nextLabels: string[]): string {
+    const start = new RegExp(`---${label}---`, 'i');
+    const end = nextLabels.length
+      ? new RegExp(`---(${nextLabels.join('|')})---`, 'i')
+      : null;
+
+    const startIndex = text.search(start);
+    if (startIndex === -1) return '';
+
+    const after = text.slice(startIndex);
+    const firstLine = after.split('\n')[0];
+    const remaining = after.slice(firstLine.length).trim();
+
+    if (!end) return remaining.trim();
+
+    const endIndex = remaining.search(end);
+    return endIndex === -1 ? remaining.trim() : remaining.slice(0, endIndex).trim();
+  }
+
+  // for #### TS headings
+  private extractBlockByHeading(text: string, label: string, nextLabels: string[]): string {
+    const start = new RegExp(`^#{3,4}\\s*${label}\\b`, 'im');
+    const end = nextLabels.length
+      ? new RegExp(`^#{3,4}\\s*(${nextLabels.join('|')})\\b`, 'im')
+      : null;
+
+    const startIndex = text.search(start);
+    if (startIndex === -1) return '';
+
+    const after = text.slice(startIndex);
+    const firstLine = after.split('\n')[0];
+    const remaining = after.slice(firstLine.length).trim();
+
+    if (!end) return remaining.trim();
+
+    const endIndex = remaining.search(end);
+    return endIndex === -1 ? remaining.trim() : remaining.slice(0, endIndex).trim();
   }
 }
