@@ -1,47 +1,85 @@
-<div class="card shadow-sm border-0">
-  <div class="card-body p-4">
-    <div class="d-flex align-items-center justify-content-between mb-3">
-      <div>
-        <h4 class="fw-bold mb-0">💀 Roast My Code</h4>
-        <small class="text-muted">AI review for Angular / TS / HTML / CSS</small>
+<div class="ai-card">
+  <div class="ai-header">
+    <div>
+      <h4 class="mb-1 fw-bold title">🎯 Interview Code Review</h4>
+      <p class="mb-0 subtitle">Paste HTML/CSS/TS/Angular code → get review + improved code + interview questions</p>
+    </div>
+
+    <div class="d-flex gap-2 flex-wrap justify-content-end">
+      <span class="badge badge-soft" *ngIf="modelUsed">
+        Model: <b class="ms-1">{{ modelUsed }}</b>
+      </span>
+
+      <span class="badge badge-soft" *ngIf="timeTakenMs">
+        Time: <b class="ms-1">{{ timeTakenMs }}ms</b>
+      </span>
+    </div>
+  </div>
+
+  <div class="ai-controls row g-3">
+    <div class="col-12">
+      <label class="form-label fw-semibold text-white-50">Paste your code</label>
+      <textarea
+        class="form-control ai-textarea font-monospace"
+        rows="12"
+        [(ngModel)]="code"
+        placeholder="Paste HTML / CSS / TS / Angular..."
+      ></textarea>
+      <div class="mt-2 d-flex justify-content-between small text-white-50">
+        <span>Tip: paste a full component/service for best results.</span>
+        <span>{{ code.length }} chars</span>
       </div>
     </div>
 
-    <div class="row g-3">
-      <div class="col-md-4">
-        <label class="form-label fw-semibold">Review Mode</label>
-        <select class="form-select" [(ngModel)]="mode">
-          <option value="senior">Senior Dev Review</option>
-          <option value="roast">Roast Mode 💀</option>
-          <option value="interview">Interview Style</option>
-        </select>
-      </div>
+    <div class="col-12 d-flex justify-content-end gap-2">
+      <button class="btn btn-outline-light ai-btn" (click)="clearAll()" [disabled]="loading">Clear</button>
 
-      <div class="col-md-8 text-md-end">
-        <button
-          class="btn btn-dark px-4 mt-4 mt-md-0"
-          (click)="roastCode()"
-          [disabled]="loading || !code.trim()"
-        >
-          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
-          Roast 🔥
-        </button>
-      </div>
+      <button class="btn btn-light ai-btn-primary" (click)="roastCode()" [disabled]="loading || !code.trim()">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+        Analyze 🎯
+      </button>
+    </div>
+  </div>
 
-      <div class="col-12">
-        <label class="form-label fw-semibold">Paste your code</label>
-        <textarea
-          class="form-control font-monospace"
-          rows="10"
-          [(ngModel)]="code"
-          placeholder="Paste TypeScript / Angular / HTML / CSS code..."
-        ></textarea>
-      </div>
+  <div class="typing mt-4" *ngIf="loading">
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+    <span class="ms-2 text-white-50">Interview review in progress...</span>
+  </div>
+
+  <div class="alert alert-danger mt-4" *ngIf="errorMsg">
+    <b>Error:</b> {{ errorMsg }}
+  </div>
+
+  <div class="ai-result mt-4" *ngIf="result && !loading">
+    <div class="result-header">
+      <h6 class="mb-0 fw-bold">✅ Result</h6>
+      <button class="btn btn-sm btn-outline-light" (click)="copyAll()">Copy All</button>
     </div>
 
-    <div class="mt-4" *ngIf="result">
-      <h6 class="fw-bold mb-2">✅ AI Review</h6>
-      <pre class="bg-light p-3 rounded border small mb-0" style="white-space: pre-wrap;">{{ result }}</pre>
+    <div class="result-body">
+      <div class="ai-accordion">
+        <div class="acc-item" *ngFor="let s of sections">
+          <button class="acc-header" (click)="toggleSection(s)">
+            <span class="left">
+              <span class="icon">{{ s.icon }}</span>
+              <span class="label">{{ s.title }}</span>
+            </span>
+
+            <span class="right">
+              <button class="mini-btn" (click)="$event.stopPropagation(); copySection(s.key)">
+                Copy
+              </button>
+              <span class="chev" [class.open]="s.open">⌄</span>
+            </span>
+          </button>
+
+          <div class="acc-body" *ngIf="s.open">
+            <pre class="raw">{{ s.content }}</pre>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

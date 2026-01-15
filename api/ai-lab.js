@@ -8,8 +8,8 @@ const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 
 // ✅ Model list (fallback)
 const MODELS = [
-  "llama-3.1-8b-instant",       // ✅ FAST + stable
-  "llama-3.2-3b-preview",       // ✅ another fallback (if available)
+  "llama-3.1-8b-instant",   // ✅ fast + stable
+  "llama-3.2-3b-preview"    // ✅ fallback (if available)
 ];
 
 async function callGroq({ apiKey, prompt }) {
@@ -26,7 +26,7 @@ async function callGroq({ apiKey, prompt }) {
         body: JSON.stringify({
           model,
           messages: [{ role: "user", content: prompt }],
-          temperature: 0.6
+          temperature: 0.35 // ✅ more accurate + less hallucination
         })
       });
 
@@ -105,34 +105,66 @@ export default async function handler(req, res) {
 
     let prompt = "";
 
-    // ✅ Action 1: Code Roast
-    if (action === "codeRoast") {
+    // ✅ Action: Interview Style Code Review
+    if (action === "codeInterviewReview") {
       if (!payload?.code?.trim()) {
         return res.status(400).json({ error: "Missing code" });
       }
 
       prompt = `
-You are an expert Angular reviewer.
+You are a Senior Frontend Engineer and Angular Interviewer.
 
-Rules:
-- Give practical improvements only.
-- Keep it short and useful.
-- If user asks bad code, still help politely.
+Your task:
+- Analyze the given input code ACCURATELY.
+- Identify whether it is HTML / CSS / TypeScript / Angular component/service/template.
+- Provide improvements WITHOUT hallucinating.
 
-Output format:
-1) Issues
-2) Improvements
-3) Better Code (optional)
-4) Quick Tips
+VERY IMPORTANT:
+- If the user input is HTML, output better HTML.
+- If CSS, output better CSS.
+- If TypeScript, output better TypeScript.
+- If Angular component/service, output complete updated code (TS + HTML + SCSS).
+- If code is incomplete, assume minimal safe missing parts and mention assumptions briefly.
 
-Mode: ${payload?.mode || "senior"}
+Return output with EXACT headings in this order:
+
+### Code Type Detected
+Explain what code type it is: HTML/CSS/TS/Angular and why.
+
+### Issues
+Bullet list of issues (real ones).
+
+### Improvements
+Bullet list of improvements.
+
+### Better Code
+Provide complete improved code.
+Use code blocks like:
+
+\`\`\`ts
+...
+\`\`\`
+
+\`\`\`html
+...
+\`\`\`
+
+\`\`\`scss
+...
+\`\`\`
+
+### Quick Tips
+Short quick wins (bullet list).
+
+### Interview Questions
+Give 8 interview questions based on this code + short expected answers.
 
 CODE:
 ${payload.code}
       `;
     }
 
-    // ✅ Action 2: Snippet Generator
+    // ✅ Optional: Keep Snippet generator
     else if (action === "snippet") {
       if (!payload?.prompt?.trim()) {
         return res.status(400).json({ error: "Missing prompt" });
