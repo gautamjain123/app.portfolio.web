@@ -1,1 +1,102 @@
-<p>snippet-generator works!</p>
+<div class="ai-card">
+  <!-- Header -->
+  <div class="ai-header">
+    <div>
+      <h4 class="mb-1 fw-bold title">⚡ Snippet Generator</h4>
+      <p class="mb-0 subtitle">Generate Angular standalone components using Bootstrap</p>
+    </div>
+
+    <div class="d-flex gap-2 flex-wrap justify-content-end">
+      <span class="badge badge-soft" *ngIf="componentName">
+        Component: <b class="ms-1">{{ componentName }}</b>
+      </span>
+
+      <span class="badge badge-soft" *ngIf="modelUsed">
+        Model: <b class="ms-1">{{ modelUsed }}</b>
+      </span>
+
+      <span class="badge badge-soft" *ngIf="timeTakenMs">
+        Time: <b class="ms-1">{{ timeTakenMs }}ms</b>
+      </span>
+    </div>
+  </div>
+
+  <!-- Prompt -->
+  <div class="ai-controls row g-3">
+    <div class="col-12">
+      <label class="form-label fw-semibold text-white-50">Your prompt</label>
+      <textarea
+        class="form-control ai-textarea"
+        rows="4"
+        [(ngModel)]="prompt"
+        placeholder="Example: Create a pricing section with 3 cards, premium dark theme, hover glow, responsive..."
+      ></textarea>
+    </div>
+
+    <div class="col-12 d-flex justify-content-end gap-2">
+      <button class="btn btn-outline-light ai-btn" (click)="clearAll()" [disabled]="loading">
+        Clear
+      </button>
+
+      <button
+        class="btn btn-light ai-btn-primary"
+        (click)="generate()"
+        [disabled]="loading || !prompt.trim()"
+      >
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+        Generate ⚡
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="typing mt-4" *ngIf="loading">
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+    <div class="typing-dot"></div>
+    <span class="ms-2 text-white-50">Generating component...</span>
+  </div>
+
+  <!-- Error -->
+  <div class="alert alert-danger mt-4" *ngIf="errorMsg">
+    <b>Error:</b> {{ errorMsg }}
+  </div>
+
+  <!-- Output -->
+  <div class="mt-4" *ngIf="!loading && (tsCode || htmlCode || scssCode)">
+    <div class="grid-3">
+      <!-- HTML CARD -->
+      <div class="code-card">
+        <div class="code-card-head">
+          <div class="code-title">{{ componentName || 'Component' }}.html</div>
+          <button class="mini-btn" (click)="copy(htmlCode)">Copy</button>
+        </div>
+        <pre class="raw">{{ htmlCode }}</pre>
+      </div>
+
+      <!-- SCSS CARD -->
+      <div class="code-card">
+        <div class="code-card-head">
+          <div class="code-title">{{ componentName || 'Component' }}.scss</div>
+          <button class="mini-btn" (click)="copy(scssCode)">Copy</button>
+        </div>
+        <pre class="raw">{{ scssCode }}</pre>
+      </div>
+
+      <!-- TS CARD -->
+      <div class="code-card">
+        <div class="code-card-head">
+          <div class="code-title">{{ componentName || 'Component' }}.ts</div>
+          <button class="mini-btn" (click)="copy(tsCode)">Copy</button>
+        </div>
+        <pre class="raw">{{ tsCode }}</pre>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="notes-box mt-3" *ngIf="notes">
+      <div class="notes-title">📝 Notes</div>
+      <div class="notes-content">{{ notes }}</div>
+    </div>
+  </div>
+</div>

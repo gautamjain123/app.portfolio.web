@@ -1,0 +1,268 @@
+/* ===========================
+   MAIN AI CARD (same theme)
+   =========================== */
+
+.ai-card {
+  border-radius: 18px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(0, 212, 255, 0.20), transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(140, 110, 255, 0.18), transparent 55%),
+    radial-gradient(circle at 30% 90%, rgba(255, 130, 200, 0.12), transparent 60%),
+    radial-gradient(circle at 70% 85%, rgba(120, 255, 214, 0.10), transparent 60%);
+  filter: blur(55px);
+  opacity: 0.75;
+  z-index: 0;
+}
+
+.ai-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===========================
+   HEADER
+   =========================== */
+
+.ai-header {
+  padding: 18px 18px 14px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.20);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.title {
+  color: #fff;
+  letter-spacing: 0.3px;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.92rem;
+}
+
+.badge-soft {
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.30);
+}
+
+/* ===========================
+   CONTROLS
+   =========================== */
+
+.ai-controls {
+  margin-top: 14px;
+  padding: 6px 6px 0;
+}
+
+.ai-textarea {
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.92);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+.ai-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.75) !important;
+  opacity: 1;
+}
+
+.ai-textarea:focus {
+  outline: none;
+  border-color: rgba(0, 212, 255, 0.50);
+  box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.12);
+}
+
+.ai-btn,
+.ai-btn-primary {
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
+/* ===========================
+   LOADING / TYPING
+   =========================== */
+
+.typing {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.typing-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  animation: bounce 0.9s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.typing-dot:nth-child(3) {
+  animation-delay: 0.30s;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+/* ===========================
+   GRID 3 OUTPUT
+   =========================== */
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 10px;
+}
+
+@media (max-width: 992px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===========================
+   CODE CARD (same theme)
+   =========================== */
+
+.code-card {
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.24);
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.code-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 212, 255, 0.22);
+}
+
+.code-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.code-title {
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.88rem;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Copy btn */
+.mini-btn {
+  border-radius: 999px;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.28);
+  color: rgba(255, 255, 255, 0.90);
+  font-size: 0.78rem;
+  transition: border-color 0.18s ease, transform 0.18s ease;
+}
+
+.mini-btn:hover {
+  border-color: rgba(0, 212, 255, 0.45);
+  transform: translateY(-1px);
+}
+
+/* Code area */
+.raw {
+  border-radius: 0;
+  border: 0;
+  background: transparent;
+  margin: 0;
+  padding: 14px;
+  max-height: 520px;
+  overflow: auto;
+
+  color: rgba(255, 255, 255, 0.90);
+  white-space: pre;
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+/* Scrollbar */
+.raw::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.raw::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+}
+.raw::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 212, 255, 0.25);
+}
+
+/* ===========================
+   NOTES
+   =========================== */
+
+.notes-box {
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.24);
+  padding: 14px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.notes-title {
+  font-weight: 900;
+  margin-bottom: 6px;
+  color: rgba(0, 212, 255, 0.92);
+  letter-spacing: 0.4px;
+}
+
+.notes-content {
+  color: rgba(255, 255, 255, 0.86);
+  white-space: pre-wrap;
+  line-height: 1.65;
+  font-size: 0.95rem;
+}
