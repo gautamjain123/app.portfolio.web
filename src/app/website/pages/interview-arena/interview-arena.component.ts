@@ -10,7 +10,7 @@ type Difficulty = 'easy' | 'medium' | 'hard';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './interview-arena.component.html',
-  styleUrls: ['./interview-arena.component.scss'] // ✅ FIXED (styleUrls)
+  styleUrls: ['./interview-arena.component.scss']
 })
 export class InterviewArenaComponent implements OnDestroy {
   topic = 'Angular';
@@ -19,11 +19,16 @@ export class InterviewArenaComponent implements OnDestroy {
   loadingQ = false;
   loadingEval = false;
   errorMsg = '';
+  testCompletedMsg = '';
+
+  // ✅ TEST MODE
+  totalQuestions = 10;
+  currentQuestionNo = 0; // 0 = not started, 1..10 running
+  isTestMode = false;
 
   // question section
   question = '';
   keyPoints: string[] = [];
-  followUps: string[] = [];
 
   // answer section
   answer = '';
@@ -46,11 +51,13 @@ export class InterviewArenaComponent implements OnDestroy {
   // streak
   streak = 0;
 
+  // ✅ lock answer after evaluation
+  isAnswerLocked = false;
+
   constructor(
     private ai: AiInterviewService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    // ✅ browser safe localStorage
     if (isPlatformBrowser(this.platformId)) {
       this.streak = Number(localStorage.getItem('aiInterviewStreak') || 0);
     }
@@ -95,18 +102,52 @@ export class InterviewArenaComponent implements OnDestroy {
     return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   }
 
-  // ---------------- QUESTION ----------------
+  // ---------------- TEST CONTROL ----------------
+  startTest(): void {
+    this.isTestMode = true;
+    this.testCompletedMsg = '';
+    this.errorMsg = '';
+
+    this.currentQuestionNo = 0;
+    this.question = '';
+    this.answer = '';
+    this.keyPoints = [];
+
+    this.clearEvaluation();
+    this.resetTimer();
+    this.isAnswerLocked = false;
+
+    // ✅ start with question 1
+    this.generateQuestion();
+  }
+
+  private finishTest(): void {
+    this.isTestMode = false;
+    this.isAnswerLocked = true;
+    this.stopTimer();
+
+    this.testCompletedMsg = `✅ Test completed! You finished ${this.totalQuestions}/${this.totalQuestions} questions.`;
+  }
+
+  // ---------------- QUESTION (Practice + Test) ----------------
   generateQuestion(): void {
+    // ✅ stop if test ended
+    if (this.isTestMode && this.currentQuestionNo >= this.totalQuestions) {
+      this.finishTest();
+      return;
+    }
+
     this.loadingQ = true;
     this.errorMsg = '';
+    this.testCompletedMsg = '';
 
     this.question = '';
     this.keyPoints = [];
-    this.followUps = [];
     this.answer = '';
 
     this.clearEvaluation();
     this.resetTimer();
+    this.isAnswerLocked = false;
 
     const start = performance.now();
 
@@ -118,11 +159,13 @@ export class InterviewArenaComponent implements OnDestroy {
         const parsed = this.parseGenerateOutput(res?.output || '');
         this.question = parsed.question;
         this.keyPoints = parsed.keyPoints;
-        this.followUps = parsed.followUps;
+
+        // ✅ increase count ONLY in test mode
+        if (this.isTestMode) {
+          this.currentQuestionNo++;
+        }
 
         this.loadingQ = false;
-
-        // ✅ auto start timer
         this.startTimer();
       },
       error: (err) => {
@@ -138,6 +181,7 @@ export class InterviewArenaComponent implements OnDestroy {
 
   // ---------------- EVALUATE ----------------
   evaluate(): void {
+    if (this.isAnswerLocked) return;
     if (!this.question.trim() || !this.answer.trim()) return;
 
     this.loadingEval = true;
@@ -157,7 +201,10 @@ export class InterviewArenaComponent implements OnDestroy {
         this.idealAnswer = parsed.idealAnswer;
         this.nextQuestion = parsed.nextQuestion;
 
-        // ✅ streak saved only on browser
+        // ✅ LOCK answer after evaluation
+        this.isAnswerLocked = true;
+
+        // ✅ streak update
         const scoreNumber = Number((this.score || '').split('/')[0]);
         if (!isNaN(scoreNumber) && scoreNumber >= 7 && isPlatformBrowser(this.platformId)) {
           this.streak += 1;
@@ -178,6 +225,45 @@ export class InterviewArenaComponent implements OnDestroy {
     });
   }
 
+  // ---------------- NEXT (only for test mode) ----------------
+  next(): void {
+    if (!this.isTestMode) return;
+
+    // ✅ If reached end, finish
+    if (this.currentQuestionNo >= this.totalQuestions) {
+      this.finishTest();
+      return;
+    }
+
+    // reset for next question
+    this.answer = '';
+    this.keyPoints = [];
+    this.clearEvaluation();
+    this.isAnswerLocked = false;
+
+    this.resetTimer();
+
+    // ✅ if ai returned nextQuestion use it, else generate fresh
+    if (this.nextQuestion?.trim()) {
+      this.question = this.nextQuestion;
+      this.nextQuestion = '';
+      this.startTimer();
+
+      // ✅ progress
+      this.currentQuestionNo++;
+    } else {
+      this.generateQuestion();
+    }
+
+    // ✅ smooth scroll to question (avoid page jump)
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => {
+        document.querySelector('.arena-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
+  }
+
+  // ---------------- HELPERS ----------------
   clearEvaluation(): void {
     this.score = '';
     this.feedback = '';
@@ -188,10 +274,7 @@ export class InterviewArenaComponent implements OnDestroy {
 
   copy(text: string): void {
     if (!text?.trim()) return;
-
-    // ✅ browser safe
     if (!isPlatformBrowser(this.platformId)) return;
-
     navigator.clipboard.writeText(text);
   }
 
@@ -200,19 +283,19 @@ export class InterviewArenaComponent implements OnDestroy {
     const src = (text || '').trim();
 
     const question = this.getBlock(src, 'QUESTION', ['KEY_POINTS']).trim();
+
+    // ✅ ignore followups completely
     const keyPointsRaw = this.getBlock(src, 'KEY_POINTS', ['FOLLOW_UPS']);
-    const followUpsRaw = this.getBlock(src, 'FOLLOW_UPS', []);
 
     const normalizeList = (raw: string) =>
       raw
         .split('\n')
-        .map(x => x.replace(/^[-*•]\s*/, '').trim())
+        .map((x) => x.replace(/^[-*•]\s*/, '').trim())
         .filter(Boolean);
 
     return {
       question,
-      keyPoints: normalizeList(keyPointsRaw),
-      followUps: normalizeList(followUpsRaw)
+      keyPoints: normalizeList(keyPointsRaw)
     };
   }
 
@@ -227,7 +310,7 @@ export class InterviewArenaComponent implements OnDestroy {
 
     const missingPoints = missingPointsRaw
       .split('\n')
-      .map(x => x.replace(/^[-*•]\s*/, '').trim())
+      .map((x) => x.replace(/^[-*•]\s*/, '').trim())
       .filter(Boolean);
 
     return { score, feedback, missingPoints, idealAnswer, nextQuestion };

@@ -14,8 +14,9 @@
         🔥 Streak: <b class="ms-1">{{ streak }}</b>
       </span>
 
-      <span class="badge badge-soft" *ngIf="modelUsed">
-        Model: <b class="ms-1">{{ modelUsed }}</b>
+      <!-- ✅ show progress only in test mode -->
+      <span class="badge badge-soft" *ngIf="isTestMode && currentQuestionNo > 0">
+        🧾 Question: <b class="ms-1">{{ currentQuestionNo }}</b> / {{ totalQuestions }}
       </span>
     </div>
   </div>
@@ -24,7 +25,11 @@
   <div class="ai-controls row g-3">
     <div class="col-12 col-lg-5">
       <label class="form-label fw-semibold text-white-50">Topic</label>
-      <input class="form-control ai-textarea" [(ngModel)]="topic" placeholder="Angular / RxJS / TS / HTML / CSS" />
+      <input
+        class="form-control ai-textarea"
+        [(ngModel)]="topic"
+        placeholder="Angular / RxJS / TS / HTML / CSS"
+      />
     </div>
 
     <div class="col-12 col-lg-3">
@@ -37,15 +42,35 @@
     </div>
 
     <div class="col-12 col-lg-4 d-flex align-items-end justify-content-lg-end gap-2">
-      <button class="btn btn-outline-light ai-btn" (click)="resetTimer()">Reset Timer</button>
+      <button type="button" class="btn btn-outline-light ai-btn" (click)="resetTimer()">
+        Reset Timer
+      </button>
 
-      <button class="btn btn-light ai-btn-primary" (click)="generateQuestion()" [disabled]="loadingQ">
+      <!-- ✅ Start test -->
+      <button type="button" class="btn btn-outline-light ai-btn" (click)="startTest()" [disabled]="loadingQ">
+        Start Test (10Q)
+      </button>
+
+      <!-- ✅ practice mode only -->
+      <button
+        *ngIf="!isTestMode"
+        type="button"
+        class="btn btn-light ai-btn-primary"
+        (click)="generateQuestion()"
+        [disabled]="loadingQ"
+      >
         <span *ngIf="loadingQ" class="spinner-border spinner-border-sm me-2"></span>
         Generate Q
       </button>
     </div>
   </div>
 
+  <!-- ✅ success msg -->
+  <div class="alert alert-success mt-4" *ngIf="testCompletedMsg">
+    {{ testCompletedMsg }}
+  </div>
+
+  <!-- ✅ error msg -->
   <div class="alert alert-danger mt-4" *ngIf="errorMsg">
     <b>Error:</b> {{ errorMsg }}
   </div>
@@ -56,7 +81,7 @@
     <div class="arena-card">
       <div class="arena-head">
         <div class="arena-title">📌 Question</div>
-        <button class="mini-btn" (click)="copy(question)">Copy</button>
+        <button type="button" class="mini-btn" (click)="copy(question)">Copy</button>
       </div>
 
       <div class="arena-body">
@@ -69,12 +94,7 @@
           </ul>
         </div>
 
-        <div class="mt-3" *ngIf="followUps.length">
-          <div class="sub">🎯 Follow Ups</div>
-          <ul class="list">
-            <li *ngFor="let f of followUps">{{ f }}</li>
-          </ul>
-        </div>
+        <!-- ❌ Follow ups removed -->
       </div>
     </div>
 
@@ -83,9 +103,9 @@
       <div class="arena-head">
         <div class="arena-title">✍️ Your Answer</div>
         <div class="d-flex gap-2">
-          <button class="mini-btn" (click)="copy(answer)">Copy</button>
-          <button class="mini-btn" (click)="pauseTimer()" *ngIf="timerRunning">Pause</button>
-          <button class="mini-btn" (click)="startTimer()" *ngIf="!timerRunning">Resume</button>
+          <button type="button" class="mini-btn" (click)="copy(answer)">Copy</button>
+          <button type="button" class="mini-btn" (click)="pauseTimer()" *ngIf="timerRunning">Pause</button>
+          <button type="button" class="mini-btn" (click)="startTimer()" *ngIf="!timerRunning">Resume</button>
         </div>
       </div>
 
@@ -95,16 +115,18 @@
           rows="12"
           [(ngModel)]="answer"
           placeholder="Write your answer like you're in a real interview..."
+          [disabled]="loadingEval || isAnswerLocked"
         ></textarea>
 
-        <div class="d-flex justify-content-end mt-3">
+        <div class="d-flex justify-content-end mt-3 gap-2">
           <button
+            type="button"
             class="btn btn-light ai-btn-primary"
             (click)="evaluate()"
-            [disabled]="loadingEval || !answer.trim()"
+            [disabled]="loadingEval || isAnswerLocked || !answer.trim()"
           >
             <span *ngIf="loadingEval" class="spinner-border spinner-border-sm me-2"></span>
-            Evaluate 🎯
+            {{ isAnswerLocked ? 'Evaluated ✅' : 'Evaluate 🎯' }}
           </button>
         </div>
       </div>
@@ -118,7 +140,7 @@
         <div class="score">
           ✅ Score: <b>{{ score }}</b>
         </div>
-        <button class="mini-btn" (click)="copy(idealAnswer)">Copy Ideal</button>
+        <button type="button" class="mini-btn" (click)="copy(idealAnswer)">Copy Ideal</button>
       </div>
 
       <div class="result-body">
@@ -137,9 +159,19 @@
           <pre class="raw">{{ idealAnswer }}</pre>
         </div>
 
-        <div class="mt-3" *ngIf="nextQuestion">
-          <div class="sub">➡️ Next Question</div>
-          <div class="text">{{ nextQuestion }}</div>
+        <!-- ✅ NEXT QUESTION -->
+        <div class="mt-3" *ngIf="isTestMode && isAnswerLocked && currentQuestionNo < totalQuestions">
+          <div class="d-flex justify-content-end mt-3">
+            <button type="button" class="btn btn-outline-light ai-btn" (click)="next()">
+              Start Next Question →
+            </button>
+          </div>
+        </div>
+
+        <!-- ✅ show completed state -->
+        <div class="mt-3" *ngIf="isTestMode && currentQuestionNo >= totalQuestions">
+          <div class="sub">✅ Test Completed</div>
+          <div class="text">You have completed <b>{{ totalQuestions }}</b> questions.</div>
         </div>
       </div>
     </div>
