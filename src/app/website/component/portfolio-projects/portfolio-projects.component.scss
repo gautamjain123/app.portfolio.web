@@ -1,7 +1,25 @@
-.case-section {
-  padding: 120px 0;
-  background: #050816;
+.projects-section {
+  padding: 90px 0;
+  position: relative;
+  overflow: hidden;
   color: #e5e7eb;
+}
+
+/* Background with opacity */
+.projects-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('../../../../assets/images/background.png');
+  background-position: center center;
+  background-size: contain;
+  background-repeat: repeat;
+  opacity: 0.98;
+  z-index: 0;
+}
+.projects-section > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* Label */
@@ -27,7 +45,6 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* subtitle */
 .subtitle {
   color: #ffffff;
   display: block;
@@ -35,207 +52,222 @@
   margin-bottom: 40px;
 }
 
-/* Case layout */
-.case-list {
-  display: flex;
-  flex-direction: column;
-  gap: 100px;
+/* ✅ CARDS GRID (like your image) */
+.projects-section {
+  padding: 110px 0;
+  color: #e5e7eb;
+  overflow: hidden;
 }
 
-/* Each case */
-.case-item {
-  display: flex;
-  align-items: center;
-  gap: 60px;
-  position: relative;
-
-  opacity: 0;
-  transform: translateY(40px);
-  transition: 0.8s ease;
+/* ✅ CARDS GRID */
+.project-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
 }
 
-.case-item.reveal {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.case-item.reverse {
-  flex-direction: row-reverse;
-}
-
-/* Text side */
-.case-text {
-  flex: 1;
-}
-
-.case-text h3 {
-  font-size: 28px;
-  margin-bottom: 12px;
-  color: #fff;
-}
-
-.case-text p {
-  font-size: 17px;
-  color: #9ca3af;
-  margin-bottom: 18px;
-}
-
-/* Tech tags */
-.case-tech {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 20px;
-
-  span {
-    padding: 6px 10px;
-    background: rgba(34, 211, 238, 0.1);
-    border: 1px solid rgba(34, 211, 238, 0.2);
-    color: #22d3ee;
-    border-radius: 6px;
-    font-size: 13px;
-    transition: 0.25s;
-  }
-
-  span:hover {
-    background: rgba(34, 211, 238, 0.2);
-    transform: translateY(-2px);
-  }
-}
-
-/* Project link */
-.case-link {
-  font-size: 15px;
-  letter-spacing: 0.5px;
-  color: #22d3ee;
-  transition: 0.3s;
-  display: inline-block;
-
-  &:hover {
-    color: #7dd3fc;
-    transform: translateX(4px);
-  }
-}
-
-/* Image container */
-.case-preview {
-  width: 100%;
-  height: 270px;
-  border-radius: 24px;
+/* ✅ Premium Card */
+.project-card {
+  border-radius: 22px;
   overflow: hidden;
   position: relative;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(6px);
-  transition: 0.4s ease;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 12px 28px rgba(14,165,233,0.25);
+  isolation: isolate; /* important for glow layers */
 
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
-    opacity: 0;
-    transform: translateX(-100%);
-    transition: 0.6s ease;
-  }
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+
+  transition: transform 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease;
+  min-height: 230px;
+
+  /* Reveal Animation (initial state) */
+  opacity: 0;
+  transform: translateY(25px) scale(0.98);
 }
 
-/* Image */
-.case-preview img {
+/* ✅ when observer adds reveal */
+.project-card.reveal {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ✅ Gradient border glow layer */
+.project-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 24px;
+  background: linear-gradient(120deg,
+      rgba(34, 211, 238, 0.6),
+      rgba(99, 102, 241, 0.6),
+      rgba(157, 78, 221, 0.6));
+  opacity: 0;
+  z-index: -2;
+  transition: opacity 0.45s ease;
+  filter: blur(12px);
+}
+
+/* ✅ Glass shine sweep */
+.project-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 30%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.06) 70%,
+    transparent 100%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.8s ease;
+  opacity: 0.9;
+  z-index: 0;
+}
+
+/* ✅ Hover Interaction */
+.project-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: rgba(34, 211, 238, 0.7);
+  box-shadow:
+    0 20px 55px rgba(14, 165, 233, 0.35),
+    0 0 0 1px rgba(34, 211, 238, 0.15);
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+.project-card:hover::after {
+  transform: translateX(120%);
+}
+
+/* ✅ Floating animation (subtle) */
+.project-card {
+  animation: floaty 6s ease-in-out infinite;
+}
+.project-card:nth-child(2) { animation-delay: 0.7s; }
+.project-card:nth-child(3) { animation-delay: 1.4s; }
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ✅ Image area */
+.card-image {
+  height: 140px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  position: relative;
+  z-index: 1;
+}
+
+/* ✅ Image + parallax zoom */
+.card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.85;
-  transition: 0.4s ease;
-  filter: grayscale(25%);
+  opacity: 0.95;
+  transition: transform 0.6s ease, filter 0.6s ease;
+  filter: grayscale(30%) saturate(0.9);
 }
 
-/* Hover reveal animation */
-.case-item:hover .case-preview {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 38px rgba(14,165,233,0.35);
-  border-color: rgba(34,211,238,0.5);
+.project-card:hover .card-image img {
+  transform: scale(1.08) translateY(-4px);
+  filter: grayscale(0%) saturate(1.1);
 }
 
-.case-item:hover .case-preview img {
-  opacity: 1;
-  filter: grayscale(0%);
-  transform: scale(1.05);
+/* ✅ Card Content */
+.card-content {
+  padding: 18px 18px 20px 18px;
+  position: relative;
+  z-index: 1; /* above shine layer */
 }
 
-.case-item:hover .case-preview::after {
-  opacity: 1;
-  transform: translateX(100%);
+.card-content h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #fff;
 }
 
-/* ---------- RESPONSIVENESS ---------- */
+.card-content p {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
 
-/* Mobile collapse */
+/* ✅ Tech tags better interaction */
+.card-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.card-tech span {
+  padding: 5px 10px;
+  background: rgba(34, 211, 238, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.18);
+  color: #22d3ee;
+  border-radius: 999px;
+  font-size: 12px;
+  transition: 0.25s ease;
+}
+
+.project-card:hover .card-tech span {
+  border-color: rgba(34, 211, 238, 0.35);
+}
+
+.card-tech span:hover {
+  background: rgba(34, 211, 238, 0.18);
+  transform: translateY(-3px);
+}
+
+/* ✅ Link */
+.card-link {
+  font-size: 13.5px;
+  color: #22d3ee;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.25s ease;
+}
+
+.card-link::after {
+  content: "↗";
+  transition: 0.25s ease;
+}
+
+.project-card:hover .card-link {
+  color: #7dd3fc;
+}
+
+.project-card:hover .card-link::after {
+  transform: translateX(4px) translateY(-2px);
+}
+
+/* ✅ Responsive */
 @media (max-width: 1000px) {
-  .case-section {
-    padding: 70px 0;
+  .project-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .project-cards {
+    grid-template-columns: 1fr;
   }
 
   .about-heading {
     font-size: 26px;
   }
 
-  .case-list {
-    gap: 60px;
-  }
-
-  .case-item {
-    flex-direction: column !important;
-    text-align: center;
-    gap: 24px;
-  }
-
-  .case-preview {
-    order: 1;
-    height: 210px;
-    box-shadow: 0 10px 20px rgba(14,165,233,0.25);
-  }
-
-  .case-text {
-    order: 2;
-  }
-
-  .case-tech {
-    justify-content: center;
-  }
-
-  .case-link {
-    display: flex;
-    justify-content: center;
-  }
-}
-
-/* Small phones */
-@media (max-width: 480px) {
-  .case-section {
-    padding: 55px 0;
-  }
-
-  .about-heading {
-    font-size: 22px;
-  }
-
-  .case-preview {
-    height: 190px;
-    border-radius: 18px;
-  }
-
-  .case-text h3 {
-    font-size: 18px;
-  }
-
-  .case-tech span {
-    font-size: 11px;
-    padding: 4px 8px;
-  }
-
-  .case-link {
-    font-size: 14px;
+  .project-card {
+    animation: none; /* disable floating on mobile */
   }
 }

@@ -47,17 +47,19 @@ export class PortfolioProjectsComponent implements AfterViewInit {
     setTimeout(() => this.initScrollAnimations(), 50);
   }
 
-  private initScrollAnimations() {
-    const items = document.querySelectorAll('.case-item');
+private initScrollAnimations() {
+  const items = document.querySelectorAll('.project-card');
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('reveal');
-        }
-      });
-    }, { threshold: 0.2 });
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal');
+      }
+    });
+  }, { threshold: 0.2 });
 
-    items.forEach(item => observer.observe(item));
-  }
+  items.forEach(item => observer.observe(item));
+}
+
+  
 }

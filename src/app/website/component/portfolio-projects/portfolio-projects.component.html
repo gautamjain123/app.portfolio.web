@@ -1,44 +1,38 @@
-<section class="case-section" id="projects">
-
+<section class="projects-section" id="projects">
   <div class="container">
 
     <div class="case-label">CRAFTED WITH PURPOSE</div>
-    <h2 class="about-heading">Featured <span class="shine">Impact Projects</span>
+
+    <h2 class="about-heading">
+      Featured <span class="shine">Impact Projects</span>
     </h2>
+
     <span class="subtitle">Your work shaping real digital experiences</span>
 
-    <div class="case-list">
+    <!-- CARD GRID -->
+    <div class="project-cards">
+      <div class="project-card" *ngFor="let project of projects; index as i">
 
-      <div 
-        class="case-item mt-4"
-        *ngFor="let project of projects; index as i"
-        [ngClass]="{ 'reverse': i % 2 === 1 }"
-      >
+        <!-- Optional Image block (only for first card like your sample) -->
+        <div class="card-image">
+          <img [src]="project.img" [alt]="project.title" />
+        </div>
 
-        <!-- Text Side -->
-        <div class="case-text">
+        <div class="card-content">
           <h3>{{ project.title }}</h3>
           <p>{{ project.desc }}</p>
 
-          <div class="case-tech">
+          <div class="card-tech">
             <span *ngFor="let t of project.tech">{{ t }}</span>
           </div>
 
-          <a class="case-link" [href]="project.link" style="text-decoration: none;" target="_blank"> → View Project </a>
-        </div>
-
-        <!-- Showcase Side -->
-        <div class="case-showcase">
-          <div class="case-preview">
-                <img [src]="project.img" alt="{{ project.title }}" />
-
-          </div>
+          <a class="card-link" [href]="project.link" target="_blank">
+            → View Project
+          </a>
         </div>
 
       </div>
-
     </div>
 
   </div>
-
 </section>
