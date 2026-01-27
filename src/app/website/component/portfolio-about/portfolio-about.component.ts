@@ -9,7 +9,7 @@ import { RouterLink } from "@angular/router";
   styleUrl: './portfolio-about.component.scss'
 })
 export class PortfolioAboutComponent {
-    scrollToProject() {
+  scrollToProject() {
     const section = document.getElementById('projects');
     const yOffset = -80; // Adjust based on your header height
 
@@ -17,4 +17,14 @@ export class PortfolioAboutComponent {
 
     window.scrollTo({ top: y, behavior: 'smooth' });
   }
+
+  cardTransform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+
+  onMouseMove(event: MouseEvent) {
+    const x = (window.innerWidth / 2 - event.clientX) / 40;
+    const y = (window.innerHeight / 2 - event.clientY) / 40;
+
+    this.cardTransform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg)`;
+  }
+
 }

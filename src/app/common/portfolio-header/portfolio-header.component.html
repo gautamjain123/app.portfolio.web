@@ -1,13 +1,24 @@
-<nav class="navbar navbar-expand-lg navbar-dark glass-nav py-2">
-  <div class="container">
+<nav class="navbar navbar-expand-lg navbar-dark glass-nav py-2"
+     [class.nav-scrolled]="scrolled">
 
-    <!-- Brand -->
-    <a class="navbar-brand brand-gradient" [routerLink]="''">
-      GJ
+  <div class="container d-flex align-items-center justify-content-between">
+
+    <!-- BRAND -->
+    <a class="navbar-brand brand" [routerLink]="''">
+      <span class="g">G</span>
+      <span class="expand expand-left">autam&nbsp;</span>
+      <span class="j">J</span>
+      <span class="expand expand-right">ain</span>
     </a>
 
+    <!-- RIGHT SIDE STATUS (only when scrolled) -->
+    <div class="online-status" *ngIf="scrolled">
+      <span class="dot"></span>
+      Online
+    </div>
+
     <!-- Mobile Toggle -->
-    <button class="navbar-toggler custom-toggler"
+    <button class="navbar-toggler custom-toggler ms-2"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#mainNav">
@@ -17,30 +28,12 @@
     <!-- Nav Links -->
     <div class="collapse navbar-collapse justify-content-end" id="mainNav">
       <ul class="navbar-nav gap-lg-4 gap-2 text-center">
-
-        <li class="nav-item">
-          <a class="nav-link nav-glow" (click)="scrollToHome()">Home</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link nav-glow" (click)="scrollToAbout()">About</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link nav-glow" (click)="scrollToProject()">Projects</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link nav-glow" [routerLink]="'blog'">Blogs</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link nav-glow" [routerLink]="'contact-me'">Contact</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link nav-glow" [routerLink]="'ai-lab'">🧪 Gautam’s Angular AI Lab</a>
-        </li>
-
+        <li class="nav-item"><a class="nav-link nav-glow" (click)="scrollToHome()">Home</a></li>
+        <li class="nav-item"><a class="nav-link nav-glow" (click)="scrollToAbout()">About</a></li>
+        <li class="nav-item"><a class="nav-link nav-glow" (click)="scrollToProject()">Projects</a></li>
+        <li class="nav-item"><a class="nav-link nav-glow" [routerLink]="'blog'">Blogs</a></li>
+        <li class="nav-item"><a class="nav-link nav-glow" [routerLink]="'contact-me'">Contact</a></li>
+        <li class="nav-item"><a class="nav-link nav-glow" [routerLink]="'ai-lab'">🧪 Gautam’s Angular AI Lab</a></li>
       </ul>
     </div>
 

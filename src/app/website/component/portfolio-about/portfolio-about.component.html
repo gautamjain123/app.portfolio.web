@@ -1,44 +1,72 @@
-<section class="about-section py-5" id="about">
-  <div class="bg-accent left"></div>
-  <div class="bg-accent right"></div>
-  <div class="floating-particles"></div>
+<section class="about-section" id="about" (mousemove)="onMouseMove($event)">
 
-  <div class="container about-wrapper">
+  <!-- Soft floating lights -->
+  <div class="gradient-orb orb1"></div>
+  <div class="gradient-orb orb2"></div>
 
-    <!-- Mini Label -->
-    <div class="about-label">WHO I AM</div>
+  <div class="about-container container">
 
-    <!-- Fancy Heading -->
-    <h2 class="about-heading">
-      <span class="shine">Frontend Developer</span>
-      crafting immersive digital experiences.
-    </h2>
+    <!-- LEFT CONTENT -->
+    <div class="about-text" [style.transform]="cardTransform">
 
-    <!-- Divider Line -->
-    <div class="about-divider"></div>
+      <div class="about-label">WHO I AM</div>
 
-    <!-- Intro Sentence -->
-    <p class="about-lead">
-      I design and engineer interface systems that feel alive — where visuals, motion,
-      and interaction work together to create meaning.
-    </p>
+      <h2 class="about-heading">
+        <span class="shine">Frontend Developer</span><br>
+        crafting immersive digital experiences
+      </h2>
 
-    <!-- Fine Body Copy -->
-    <p class="about-body">
-      My work blends Angular, Three.js, UI/UX thinking, animation layers, and futuristic design.
-      Whether it’s a clean product dashboard or a cinematic portfolio canvas,
-      I focus on emotional impact + technical precision.
-    </p>
+      <div class="about-divider"></div>
 
-    <!-- Signature Line -->
-    <p class="about-tagline">
-      <span>My goal?</span> interfaces that look good — **and feel alive.**
-    </p>
+      <p class="about-lead">
+        I design and engineer interface systems that feel alive — where visuals, motion,
+        and interaction work together to create meaning.
+      </p>
 
-    <!-- Buttons -->
-    <div class="about-actions">
-      <a  class="btn btn-gradient" (click)="scrollToProject()">Explore Work</a>
-      <a class="btn btn-gradient" [routerLink]="'contact-me'">Connect</a>
+      <p class="about-body">
+        My work blends Angular, Three.js, UI/UX thinking, animation layers, and futuristic design.
+        Whether it’s a clean product dashboard or a cinematic portfolio canvas,
+        I focus on emotional impact + technical precision.
+      </p>
+
+      <p class="about-tagline">
+        <span>My goal?</span> Interfaces that look good — and feel alive.
+      </p>
+
+      <div class="about-actions">
+        <a class="btn btn-gradient" (click)="scrollToProject()">Explore Work</a>
+        <a class="btn btn-outline" [routerLink]="'contact-me'">Connect</a>
+      </div>
+
+    </div>
+
+    <!-- RIGHT VISUAL SIDE -->
+    <div class="about-visual">
+      <div class="visual-card">
+        <div class="card-ui">
+          <!-- Top Bar -->
+          <div class="ui-header"></div>
+
+          <!-- Fake Chart -->
+          <div class="ui-chart">
+            <span style="height: 40%"></span>
+            <span style="height: 70%"></span>
+            <span style="height: 55%"></span>
+            <span style="height: 85%"></span>
+            <span style="height: 60%"></span>
+          </div>
+
+          <!-- Lines -->
+          <div class="ui-lines">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <div class="visual-ring"></div>
+      <div class="visual-ringtwo"></div>
+      <div class="visual-glow"></div>
     </div>
 
   </div>

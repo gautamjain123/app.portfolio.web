@@ -7,19 +7,57 @@
 }
 
 .container {
-  background: rgba(10, 10, 18, 0.5);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  background: linear-gradient(
+    135deg,
+    rgba(40, 40, 60, 0.85),
+    rgba(20, 20, 35, 0.75)
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
   border-radius: 210px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+
+  transition: all 0.3s ease;
 }
 
-/* Gradient Brand Text */
-.brand-gradient {
+.navbar-brand.brand {
+  display: inline-flex;
+  align-items: center;
   font-weight: 700;
   font-size: 24px;
+  cursor: pointer;
+}
+
+/* Gradient Text */
+.navbar-brand span {
   background: linear-gradient(90deg, #7dd3fc, #6366f1, #9d4edd);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+}
+
+/* Hidden name parts initially */
+.expand {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-width 0.5s ease, opacity 0.4s ease;
+}
+
+/* Animate in on hover */
+.navbar-brand:hover .expand-left {
+  max-width: 120px; /* enough to fit "autam " */
+  opacity: 1;
+}
+
+.navbar-brand:hover .expand-right {
+  max-width: 80px; /* enough to fit "ain" */
+  opacity: 1;
 }
 
 /* Modern nav hover */
@@ -44,4 +82,65 @@
 
 .custom-toggler .navbar-toggler-icon {
   filter: brightness(2);
+}
+
+
+/* NAVBAR SHRINK */
+.nav-scrolled .container {
+  padding: 6px 18px !important;
+  border-radius: 40px;
+  transform: scale(0.70);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hide nav links when scrolled */
+.nav-scrolled .navbar-collapse, .nav-scrolled .navbar-toggler {
+  display: none !important;
+}
+/* Default hidden parts */
+.expand {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-width 0.5s ease, opacity 0.4s ease;
+}
+
+/* Show full name on hover */
+.navbar-brand:hover .expand {
+  max-width: 120px;
+  opacity: 1;
+}
+
+/* ALWAYS show full name when scrolled */
+.nav-scrolled .expand {
+  max-width: 120px;
+  opacity: 1;
+}
+.online-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #9effb0;
+  background: rgba(0, 255, 140, 0.08);
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 255, 140, 0.25);
+  backdrop-filter: blur(6px);
+}
+
+/* Blinking green dot */
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #00ff88;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00ff88;
+  animation: blink 1.2s infinite ease-in-out;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
 }

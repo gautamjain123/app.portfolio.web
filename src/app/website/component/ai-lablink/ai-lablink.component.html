@@ -1,0 +1,61 @@
+<section class="ai-lab-preview">
+  <div class="ai-lab-container container">
+
+    <!-- LEFT SIDE -->
+    <div class="ai-lab-text">
+      <div class="lab-badge">🧪 EXPERIMENTAL ZONE</div>
+
+      <h2>
+        Welcome to <span>Gautam’s Angular AI Lab</span>
+      </h2>
+
+      <p>
+        A playground where code meets AI. Roast your components, generate Angular snippets,
+        and simulate real interview challenges — all in one place.
+      </p>
+
+      <ul class="lab-features">
+        <li>💀 Brutal but useful code feedback</li>
+        <li>⚡ Instant Angular boilerplate generator</li>
+        <li>🎯 Smart interview practice mode</li>
+      </ul>
+
+      <a class="lab-btn" [routerLink]="'ai-lab'">
+        Enter the AI Lab →
+      </a>
+    </div>
+
+    <!-- RIGHT SIDE TERMINAL CARD -->
+    <div class="ai-lab-visual">
+      <div class="lab-glow"></div>
+
+      <div class="lab-card">
+        <div class="terminal-header">
+          <span></span><span></span><span></span>
+        </div>
+
+        <div class="terminal-body">
+<pre>
+> ng generate component smart-card
+✔ Component structure optimized
+✔ ChangeDetection: OnPush suggested
+✔ Lazy loading enabled
+
+> ai.review(code)
+⚠ Too many nested subscriptions
+✔ Suggested RxJS switchMap pattern
+
+> ai.interview.start()
+Q: Explain Angular signals vs RxJS
+Typing answer...
+</pre>
+        </div>
+
+        <div class="terminal-footer">
+          <span class="pulse-dot"></span> AI Active
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

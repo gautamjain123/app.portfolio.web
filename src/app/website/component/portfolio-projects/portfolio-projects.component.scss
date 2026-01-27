@@ -1,25 +1,8 @@
 .projects-section {
   padding: 90px 0;
-  position: relative;
-  overflow: hidden;
+   overflow: hidden;
+  background: #050816;
   color: #e5e7eb;
-}
-
-/* Background with opacity */
-.projects-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url('../../../../assets/images/background.png');
-  background-position: center center;
-  background-size: contain;
-  background-repeat: repeat;
-  opacity: 0.98;
-  z-index: 0;
-}
-.projects-section > * {
-  position: relative;
-  z-index: 1;
 }
 
 /* Label */
