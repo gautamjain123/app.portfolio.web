@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   private siteDescription =
     'Portfolio of Gautam Jain — Software & Web Developer specializing in Angular, UI, animations, and modern web experiences.';
   private siteUrl = 'https://buildwithgautam.com';
-  private previewImage = 'https://buildwithgautam.com/assets/images/og-preview.jpg';
+  private previewImage = 'https://buildwithgautam.com/assets/images/og-preview.png';
 
   constructor(
     private titleService: Title,
