@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Title, Meta } from '@angular/platform-browser';
+import { Title, Meta, DomSanitizer } from '@angular/platform-browser';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -10,34 +11,99 @@ import { Title, Meta } from '@angular/platform-browser';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  title = 'Build With Gautam | Full Stack Frontend Developer';
+
+  private siteTitle = 'Build With Gautam | Frontend Developer';
+  private siteDescription =
+    'Portfolio of Gautam Jain — Software & Web Developer specializing in Angular, UI, animations, and modern web experiences.';
+  private siteUrl = 'https://buildwithgautam.com';
+  private previewImage = 'https://buildwithgautam.com/assets/images/og-preview.jpg';
 
   constructor(
     private titleService: Title,
-    private metaService: Meta
+    private metaService: Meta,
+    @Inject(DOCUMENT) private doc: Document,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle(this.title);
+    this.setBasicSEO();
+    this.setOpenGraph();
+    this.setTwitterCard();
+    this.setCanonicalURL();
+    this.addStructuredData();
+  }
 
-    this.metaService.addTags([
-      { name: 'description', content: 'Portfolio of Gautam Jain — Software & Web Developer specializing in Angular, UI, WordPress, and modern web experiences.' },
-      { name: 'keywords', content: 'Frontend Developer, Angular Developer, UI Developer, Portfolio, Web Developer India, Gautam Jain' },
-      { name: 'author', content: 'Gautam Jain' },
-      { name: 'robots', content: 'index, follow' },
+  /* ---------- BASIC SEO ---------- */
+  private setBasicSEO() {
+    this.titleService.setTitle(this.siteTitle);
 
-      // Open Graph SEO (LinkedIn / Facebook sharing)
-      { property: 'og:title', content: 'Build With Gautam | Frontend Developer' },
-      { property: 'og:description', content: 'I build interactive UI, scalable apps, 3D effects, performance optimized experiences.' },
-      { property: 'og:image', content: 'https://buildwithgautam.com/assets/images/og-preview.jpg' },
-      { property: 'og:url', content: 'https://buildwithgautam.com' },
-      { property: 'og:type', content: 'website' },
+    this.metaService.updateTag({ name: 'description', content: this.siteDescription });
+    this.metaService.updateTag({ name: 'keywords', content: 'Frontend Developer, Angular Developer, UI Developer, Portfolio, Web Developer India, Gautam Jain' });
+    this.metaService.updateTag({ name: 'author', content: 'Gautam Jain' });
+    this.metaService.updateTag({ name: 'robots', content: 'index, follow' });
+    this.metaService.updateTag({ name: 'theme-color', content: '#4f8cff' });
+  }
 
-      // Twitter Card
-      { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:title', content: 'Build With Gautam' },
-      { name: 'twitter:description', content: 'Frontend Developer Portfolio' },
-      { name: 'twitter:image', content: 'https://buildwithgautam.com/assets/images/og-preview.jpg' }
-    ]);
+  /* ---------- OPEN GRAPH (LinkedIn / Facebook) ---------- */
+  private setOpenGraph() {
+    this.metaService.updateTag({ property: 'og:title', content: this.siteTitle });
+    this.metaService.updateTag({ property: 'og:description', content: this.siteDescription });
+    this.metaService.updateTag({ property: 'og:image', content: this.previewImage });
+    this.metaService.updateTag({ property: 'og:url', content: this.siteUrl });
+    this.metaService.updateTag({ property: 'og:type', content: 'website' });
+    this.metaService.updateTag({ property: 'og:site_name', content: 'Build With Gautam' });
+  }
+
+  /* ---------- TWITTER CARD ---------- */
+  private setTwitterCard() {
+    this.metaService.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.metaService.updateTag({ name: 'twitter:title', content: this.siteTitle });
+    this.metaService.updateTag({ name: 'twitter:description', content: this.siteDescription });
+    this.metaService.updateTag({ name: 'twitter:image', content: this.previewImage });
+    this.metaService.updateTag({ name: 'twitter:creator', content: '@yourhandle' }); // optional
+  }
+
+  /* ---------- CANONICAL URL ---------- */
+  private setCanonicalURL() {
+    if (isPlatformBrowser(this.platformId)) {
+      const existingLink: HTMLLinkElement | null = this.doc.querySelector("link[rel='canonical']");
+      const link: HTMLLinkElement = existingLink || this.doc.createElement('link');
+
+      link.setAttribute('rel', 'canonical');
+      link.setAttribute('href', this.siteUrl);
+
+      if (!existingLink) {
+        this.doc.head.appendChild(link);
+      }
+    }
+  }
+
+  /* ---------- STRUCTURED DATA (GOOGLE RICH RESULTS) ---------- */
+  private addStructuredData() {
+    if (isPlatformBrowser(this.platformId)) {
+      const script = this.doc.createElement('script');
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Gautam Jain",
+        "url": this.siteUrl,
+        "image": this.previewImage,
+        "jobTitle": "Frontend Developer",
+        "sameAs": [
+          "https://www.linkedin.com/in/yourprofile",
+          "https://github.com/yourprofile"
+        ],
+        "knowsAbout": [
+          "Angular",
+          "Frontend Development",
+          "UI/UX",
+          "Web Performance",
+          "Three.js"
+        ]
+      });
+
+      this.doc.head.appendChild(script);
+    }
   }
 }
