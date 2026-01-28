@@ -1,27 +1,31 @@
 <section class="hero" id="home">
   <canvas #bgCanvas class="hero__canvas"></canvas>
 
-  <div class="container">
+  <div class="hero-overlay"></div>
+
+  <div class="container hero-layout">
     <div class="hero__content">
+
+      <div class="status-badge">
+        <span class="dot"></span>
+        Available for Projects
+      </div>
+
       <h1>
-        Hi, I'm <span class="accent">Gautam Jain</span><br />
-        I build immersive web experiences.
+        Crafting <span class="gradient-text">Immersive</span><br />
+        Digital Experiences
       </h1>
 
-      <p>Frontend Developer · Angular · Parallax UI</p>
+      <p class="subtitle">
+        Hi, I'm <strong>Gautam Jain</strong> — Frontend Developer specializing in
+        Angular, 3D interfaces & high-impact UI.
+      </p>
 
       <div class="buttons">
         <button (click)="scrollToCategory()">View Work</button>
-
-        <button class="ghost"
-                #downloadBtn
-                (click)="explodeResume(downloadBtn)">
-          Download Resume
-        </button>
+        <button class="ghost" (click)="downloadResume()">Download Resume</button>
       </div>
+
     </div>
   </div>
-
-  <!-- Explosion canvas -->
-  <canvas #resumeExplosion class="resume-explosion"></canvas>
 </section>

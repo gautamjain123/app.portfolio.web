@@ -3,10 +3,21 @@
   min-height: 100vh;
   width: 100%;
   overflow: hidden;
-  color: #fff;
   display: flex;
   align-items: center;
+  color: #fff;
   background: #050816;
+}
+
+/* Dark gradient overlay for readability */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 70% 40%, rgba(99,102,241,0.15), transparent 40%),
+    linear-gradient(to right, rgba(5,8,22,0.95) 0%, rgba(5,8,22,0.75) 40%, rgba(5,8,22,0.4) 70%, transparent 100%);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .hero__canvas {
@@ -15,44 +26,78 @@
   width: 100%;
   height: 100%;
 }
-.resume-explosion {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-}
 
-.hero__content {
+/* Layout */
+.hero-layout {
   position: relative;
   z-index: 2;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
 }
 
+/* Content block */
+.hero__content {
+  max-width: 640px;
+  padding: 2rem 0;
+}
+
+/* Status badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(99,102,241,0.12);
+  border: 1px solid rgba(99,102,241,0.35);
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(6px);
+}
+
+.status-badge .dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+/* Heading */
 h1 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1.2;
-  margin-bottom: 1rem;
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 1.2rem;
+  letter-spacing: -1px;
 }
 
-.accent {
-  background: linear-gradient(120deg, #6366f1, #ec4899);
+/* Gradient highlight word */
+.gradient-text {
+  background: linear-gradient(90deg, #6366f1, #ec4899);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-p {
+/* Subtitle */
+.subtitle {
   font-size: 1.1rem;
-  opacity: 0.85;
-  margin-bottom: 2rem;
+  line-height: 1.7;
+  color: #cbd5e1;
+  margin-bottom: 2.2rem;
 }
 
+/* Buttons */
 .buttons {
   display: flex;
   gap: 1rem;
 }
 
 button {
-  padding: 0.8rem 1.5rem;
+  padding: 0.9rem 1.6rem;
   border-radius: 50px;
   border: none;
   cursor: pointer;
@@ -60,89 +105,57 @@ button {
   font-weight: 500;
   background: linear-gradient(120deg, #6366f1, #ec4899);
   color: white;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(99,102,241,0.35);
 }
 
 button.ghost {
-  border: 1px solid #9ca3af;
   background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #e2e8f0;
 }
-/* 📌 Tablet Screens (<= 992px) */
+
+button.ghost:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+/* Responsive */
 @media (max-width: 992px) {
-  .hero {
-    min-height: 80vh;
-    padding-top: 60px;
-  }
-
-  h1 {
-    font-size: clamp(2rem, 6vw, 3rem);
+  .hero-layout {
+    justify-content: center;
     text-align: center;
-  }
-
-  p {
-    font-size: 1rem;
-    text-align: center;
-    margin-bottom: 1.5rem;
   }
 
   .hero__content {
-    text-align: center;
-    margin: 0 auto;
+    max-width: 90%;
   }
 
   .buttons {
     justify-content: center;
+    flex-wrap: wrap;
   }
 }
 
-/* 📌 Mobile Screens (<= 768px) */
-@media (max-width: 768px) {
-  .hero {
-    min-height: 70vh;
-    padding-top: 40px;
-  }
-
+@media (max-width: 600px) {
   h1 {
-    font-size: clamp(1.8rem, 8vw, 2.6rem);
-    line-height: 1.3;
-    text-align: center;
+    font-size: clamp(2.2rem, 7vw, 3rem);
   }
 
-  p {
-    font-size: 0.95rem;
-    text-align: center;
+  .subtitle {
+    font-size: 1rem;
   }
 
   .buttons {
     flex-direction: column;
     align-items: center;
-    gap: 0.8rem;
   }
 
   button {
-    width: 90%;
+    width: 100%;
     max-width: 260px;
-    font-size: 0.95rem;
-    padding: 0.7rem 1.3rem;
-  }
-}
-
-/* 📌 Extra Small Devices (<= 480px) */
-@media (max-width: 480px) {
-  .hero {
-    min-height: 65vh;
-    padding-top: 20px;
-  }
-
-  h1 {
-    font-size: clamp(1.6rem, 9vw, 2.2rem);
-  }
-
-  p {
-    font-size: 0.92rem;
-  }
-
-  button {
-    font-size: 0.9rem;
-    padding: 0.6rem 1.2rem;
   }
 }

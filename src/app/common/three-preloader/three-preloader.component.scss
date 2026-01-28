@@ -1,0 +1,72 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #0a0a0f, #000000 70%);
+  z-index: 99999;
+  transition: opacity 0.8s ease;
+  overflow: hidden;
+}
+
+.preloader.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.info {
+  position: absolute;
+  bottom: 12%;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+}
+
+.role {
+  font-size: 16px;
+  letter-spacing: 4px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  background: linear-gradient(120deg, #6366f1, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+  animation: fadeInRole 1s ease 1.5s forwards;
+}
+
+/* Loading Bar */
+.loading-bar {
+  width: 240px;
+  height: 4px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.role {
+  font-size: clamp(12px, 2.5vw, 18px);
+  letter-spacing: clamp(2px, 1vw, 4px);
+}
+.loading-bar {
+  width: clamp(140px, 40vw, 240px);
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(120deg, #6366f1, #ec4899);
+  box-shadow: 0 0 12px rgba(236,72,153,0.6);
+  animation: loadProgress 3.2s ease forwards;
+}
+
+@keyframes loadProgress {
+  to { width: 100%; }
+}
+
+@keyframes fadeInRole {
+  to { opacity: 1; }
+}
